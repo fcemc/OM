@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>FCEMC-OM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+
+    <link href="js/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
+    <script src="js/jquery-1.12.2.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+    <script src="js/toastr.min.js"></script>
+    <link href="content/toastr.min.css" rel="stylesheet" />
+    
+    <link href="css/StyleSheet.css" rel="stylesheet" />
+    <script src="js/OMSload.js"></script>
+    <script src="js/jquery.spin.js"></script>
+
+    <script src="http://gis.fourcty.org/FCEMCrest/scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="http://gis.fourcty.org/FCEMCrest/signalr/hubs/hubs"></script>
+
+    <script src="phonegap.js"></script>
+    <script src="cordova.js"></script>
+
+</head>
+<body>
+    <div id="spinCont">
+        <div id="spinwheel"></div>
+    </div>
+    
+    <div data-role="page" data-dialog="true" id="pageLogin" data-theme="a" class="ui-corner-all">
+        <div style="padding:10px 20px;">
+            <h3>Please sign in</h3>
+            <label for="un" class="ui-hidden-accessible">Username:</label>
+            <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+            <label for="pw" class="ui-hidden-accessible">Password:</label>
+            <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
+            <a href="" onclick="checkLogin();" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="pop">Submit</a>
+            <label class="redbull" id="loginError"></label>
+        </div>
+        <div style="text-align:center">
+            <label id="err"></label>
+        </div>
+    </div>
+
+    <div data-role="page" id="page1">
+        <div class="hdr" data-role="header">
+            <h1>Current Outages</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div style="text-align:center;">
+                <div id="outage"></div>
+            </div>
+            <div style="text-align:center;">
+                <div id="avl"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--<div data-role="page" id="page2">
+
+        <div data-role="header">
+            <h1>Foo</h1>
+        </div>
+        <div role="main" class="ui-content">
+        </div>
+    </div>-->
+
+</body>
+</html>
