@@ -2,6 +2,10 @@
 
 $(document).ready(function () {
     if (navigator.onLine) {
+        if (/iPad/i.test(navigator.userAgent)) {
+            $(".pg").css({ "margin-top": "20px" });
+        }
+
         checkCookie();
 
         getSpinner();
