@@ -1,11 +1,8 @@
 ﻿var tryingToReconnect = false, user;
 
 $(document).ready(function () {
-    if (navigator.onLine) {
-        if (/iPad/i.test(navigator.userAgent)) {
-            $("body").css("background-color", "black");
-            $(".pg").css({ "margin-top": "20px" });
-        }
+    if (navigator.onLine) {      
+
 
         checkCookie();
 
@@ -103,8 +100,14 @@ function checkLogin() {
         success: function (results) {
             if (results.authenticateYouSirResult) {
                 $("#loginError").text("");
+
+                if (/iPad/i.test(navigator.userAgent)) {
+                    $("body").css("background-color", "black");
+                    $(".pg").css({ "margin-top": "20px" });
+                }
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
-                $("#spinCont").show();
+
+                                $("#spinCont").show();
 
                 if (localStorage.fcemcOMS_uname == undefined) {
                     setCookie(user, _pw, 20); //expires 20 days from inital login
