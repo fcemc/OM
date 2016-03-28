@@ -59,11 +59,6 @@
 
   <!-- Plugins -->
 
-  <feature name="NetworkStatus">
-    <param name="ios-package" value="CDVConnection" /> 
-    <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
-  </feature>
-
   <!-- Core plugins -->
   <gap:plugin name="org.apache.cordova.battery-status" />
   <gap:plugin name="org.apache.cordova.camera" />
@@ -84,6 +79,7 @@
   <gap:plugin name="org.apache.cordova.splashscreen" />
   <gap:plugin name="org.apache.cordova.vibration" />
   <gap:plugin name="org.apache.cordova.statusbar" />
+  <gap:plugin name="org.apache.cordova.network-information" version="0.2.7" />
 
   <!-- Third party plugins -->
   <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
