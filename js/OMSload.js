@@ -2,84 +2,83 @@
 
 $(document).ready(function () {
     if (navigator.onLine) {
-        alert("Online");
-    }
-    else {
-        alert("Offline");
-    }
+        checkCookie();
 
+        getSpinner();
+        $("#spinCont").hide();
 
-    checkCookie();
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
 
-    getSpinner();
-    $("#spinCont").hide();
+        $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
 
-    toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "0",
-        "hideDuration": "0",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    }
+        $.connection.hub.logging = true;
 
-    $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
+        var mainChat = $.connection.mainHub;
+        mainChat.client.broadcastMessage = function (data, option) {
 
-    $.connection.hub.logging = true;
+            if (tryingToReconnect)  //catch in case reconnected doesn't get called
+            {
+                tryingToReconnect = false;
+            }
 
-    var mainChat = $.connection.mainHub;
-    mainChat.client.broadcastMessage = function (data, option) {
+            switch (option) {
+                case "AVL":
+                    AVLResults(data);
+                    break;
+                case "OUTAGE":
+                    listOutages(data);
+                    break;
+                case "SCADA":
+                    //processSCADA(data);
+                    break;
+                default:
+            }
+        };
 
-        if (tryingToReconnect)  //catch in case reconnected doesn't get called
-        {
+        $.connection.hub.start().done(function () {
+            //init();  //intalize after login is validated
+        });
+
+        $.connection.hub.disconnected(function () {
+            if (tryingToReconnect) {
+                setTimeout(function () {
+                    $.connection.hub.start().done(function () { init(); });
+                }, 5000); // Restart connection after 5 seconds.
+            }
+        });
+
+        $.connection.hub.reconnecting(function () {
+            toastr["error"]("Network connection lost! Trying to restore connection...");
+            tryingToReconnect = true;
+        });
+
+        $.connection.hub.reconnected(function () {
+            toastr["success"]("Connection restored!");
             tryingToReconnect = false;
+        });
+    }
+    else {        
+        var r = confirm("No network connection detected, check setting and try again!");
+        if (r == true) {
+            window.location.reload();
         }
-
-        switch (option) {
-            case "AVL":
-                AVLResults(data);
-                break;
-            case "OUTAGE":
-                listOutages(data);
-                break;
-            case "SCADA":
-                //processSCADA(data);
-                break;
-            default:
-        }
-    };
-
-    $.connection.hub.start().done(function () {
-        //init();  //intalize after login is validated
-    });
-
-    $.connection.hub.disconnected(function () {
-        if (tryingToReconnect) {
-            setTimeout(function () {
-                $.connection.hub.start().done(function () { init(); });
-            }, 5000); // Restart connection after 5 seconds.
-        }
-    });
-
-    $.connection.hub.reconnecting(function () {
-        toastr["error"]("Network connection lost! Trying to restore connection...");
-        tryingToReconnect = true;
-    });
-
-    $.connection.hub.reconnected(function () {
-        toastr["success"]("Connection restored!");
-        tryingToReconnect = false;
-    });
-
+    }
 });
 
 //region Login&Cookies
