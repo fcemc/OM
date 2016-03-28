@@ -59,6 +59,11 @@
 
   <!-- Plugins -->
 
+  <feature name="NetworkStatus">
+    <param name="ios-package" value="CDVConnection" /> 
+    <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+  </feature>
+
   <!-- Core plugins -->
   <gap:plugin name="org.apache.cordova.battery-status" />
   <gap:plugin name="org.apache.cordova.camera" />
@@ -157,9 +162,11 @@
   <allow-intent href="sms:*" />
   <allow-intent href="mailto:jerrysimmons@fourcty.org" />
   <allow-intent href="geo:*" />
+  
   <platform name="android">
     <allow-intent href="market:*" />
   </platform>
+  
   <platform name="ios">
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
