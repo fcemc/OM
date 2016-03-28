@@ -1,13 +1,13 @@
 ﻿var tryingToReconnect = false, user;
 
 $(document).ready(function () {
+    if (navigator.onLine) {
+        alert("Online");
+    }
+    else {
+        alert("Offline");
+    }
 
-    alert(navigator.connection.type.toString());
-
-    //var status = checkNetworkConnection();
-    //if (status != "none") {
-
-    //}
 
     checkCookie();
 
@@ -127,18 +127,17 @@ function setCookie(u, p, t) {
     localStorage.setItem("fcemcOMS_timeout", d);
 }
 
-function getCookie() {    
+function getCookie() {
     var isCookies = false;
-    if (localStorage.fcemcOMS_uname != null && localStorage.fcemcOMS_pass != null)
-    {
+    if (localStorage.fcemcOMS_uname != null && localStorage.fcemcOMS_pass != null) {
         isCookies = true;
-    }    
+    }
     return isCookies;
 }
 
 function checkCookie() {
     var valid = getCookie();
-    if (valid == true) {        
+    if (valid == true) {
         if (new Date(localStorage.fcemcOMS_timeout) > new Date()) {
             $("#un").val(localStorage.fcemcOMS_uname);
             $("#pw").val(localStorage.fcemcOMS_pass);
