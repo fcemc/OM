@@ -210,7 +210,7 @@ function listOutages(data) {
         $("#outage").html(_string.toString());
         $('#outage [data-role=collapsible-set]').collapsibleset();
 
-        navigator.notification.beep(2);
+        navigator.notification.beep(1);
         navigator.notification.vibrate(1000);
     }
     else if (data.length == 0) {
