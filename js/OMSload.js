@@ -113,7 +113,12 @@ function checkLogin() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
-            $("#loginError").text("Login Unsucessful");
+            if (navigator.onLine) {
+                $("#loginError").text("No network connection - cannot login!");
+            }
+            else {
+                //$("#loginError").text("Login Unsucessful");
+            }
         }
     });
 }
