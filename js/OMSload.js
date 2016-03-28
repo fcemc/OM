@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
 
-    alert(navigator.network.connection.type.toString());
+    alert(navigator.connection.type.toString());
 
     //var status = checkNetworkConnection();
     //if (status != "none") {
