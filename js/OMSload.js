@@ -78,6 +78,9 @@ $(document).ready(function () {
         if (r == true) {
             window.location.reload();
         }
+        else {
+            $.mobile.pageContainer.pagecontainer("change", "#pageLogin");
+        }
     }
 });
 
