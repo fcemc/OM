@@ -3,6 +3,7 @@
 $(document).ready(function () {
     if (navigator.onLine) {
         if (/iPad/i.test(navigator.userAgent)) {
+            $("body").css("background-color", "black");
             $(".pg").css({ "margin-top": "20px" });
         }
 
