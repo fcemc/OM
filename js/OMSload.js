@@ -113,7 +113,7 @@ function checkLogin() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
-            if (navigator.onLine) {
+            if (!(navigator.onLine)) {
                 $("#loginError").text("No network connection - cannot login!");
             }
             else {
