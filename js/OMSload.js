@@ -1,9 +1,7 @@
 ﻿var tryingToReconnect = false, user;
 
 $(document).ready(function () {
-    if (navigator.onLine) {      
-
-
+    if (navigator.onLine) {
         checkCookie();
 
         getSpinner();
@@ -47,7 +45,7 @@ $(document).ready(function () {
                     listOutages(data);
                     break;
                 case "SCADA":
-                    //processSCADA(data);
+                    listSCADAOutages(data);
                     break;
                 default:
             }
@@ -75,7 +73,7 @@ $(document).ready(function () {
             tryingToReconnect = false;
         });
     }
-    else {        
+    else {
         var r = confirm("No network connection detected, check setting and try again!");
         if (r == true) {
             window.location.reload();
@@ -89,9 +87,8 @@ $(document).ready(function () {
 //region Login&Cookies
 function checkLogin() {
     user = $("#un").val().trim();
-    var _pw = $("#pw").val().trim();
-
-    var paramItems = user + "|" + _pw;
+    
+    var paramItems = user + "|" + $("#pw").val().trim();
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,
@@ -100,22 +97,22 @@ function checkLogin() {
         success: function (results) {
             if (results.authenticateYouSirResult) {
                 $("#loginError").text("");
-
-                if (/iPad/i.test(navigator.userAgent)) {
+                
+                $.mobile.pageContainer.pagecontainer("change", "#page1");
+                if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
                     $("body").css("background-color", "black");
                     $(".pg").css({ "margin-top": "20px" });
                 }
-                $.mobile.pageContainer.pagecontainer("change", "#page1");
 
-                                $("#spinCont").show();
+                $("#spinCont").show();
 
                 if (localStorage.fcemcOMS_uname == undefined) {
                     setCookie(user, _pw, 20); //expires 20 days from inital login
                 }
 
-                init();
-                getOutages();
-
+                register();
+                initLoad();
+                
             }
             else {
                 window.localStorage.clear();
@@ -162,7 +159,7 @@ function checkCookie() {
 }
 //endregion
 
-function init() {
+function register() {
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/initalizeLink",
@@ -182,6 +179,28 @@ function init() {
     });
 }
 
+function initLoad() {
+    //// do these for inital data loading...
+    getAVL();
+    getOutages();
+    getSCADAOutages();
+}
+
+function getAVL() {
+    $.ajax({
+        type: "GET",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getAVLstatus",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        success: function (results) {
+            AVLResults(results.getAVLstatusResult);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            var e = errorThrown;
+        }
+    });
+}
+
 function getOutages() {
     $.ajax({
         type: "GET",
@@ -190,6 +209,21 @@ function getOutages() {
         cache: false,
         success: function (results) {
             listOutages(results.getOUTAGECASESResult);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            var e = errorThrown;
+        }
+    });
+}
+
+function getSCADAOutages() {
+    $.ajax({
+        type: "GET",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/ALLSTATUS",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        success: function (results) {
+            listSCADAOutages(results.ALLSTATUSResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
@@ -222,8 +256,79 @@ function listOutages(data) {
         navigator.notification.vibrate(1000);
     }
     else if (data.length == 0) {
-        $("#outage").html("No Outages at this time");
+        //$("#outage").html("No Outages at this time");
     }
+    $("#spinCont").hide();
+}
+
+function listSCADAOutages(data) {
+
+    var _string = "<div data-role='collapsible-set'>";
+
+    if (data[0].scadaCircuits.length > 0) {
+        $("#ckts").remove();
+        var _data = data.scadaCircuits;
+        for (i = 0; i < data.length; i++) {
+            _string += "<div id='ckts' data-role='collapsible'><h3>" + data[i].CASENUM + "</h3>";
+            _string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
+            _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
+            _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
+            _string += "<div class='accdEntry'><b>Start Date:</b> " + data[i].DATESTRT + "</div>";
+            _string += "<div class='accdEntry'><b>Element:</b> " + data[i].ELEMENT + "</div>";
+            _string += "<div class='accdEntry'><b>Element ID:</b> " + data[i].ELEMENTID + "</div>";
+            _string += "<div class='accdEntry'><b>Pole Number:</b> " + data[i].POLENUM + "</div>";
+            _string += "<div class='accdEntry'><b>Case Status:</b> " + data[i].CASESTATUS + "</div>";
+            _string += "</div>";
+        }
+        _string += "</div>";
+    }
+
+    if (data[0].scadaFaults.length > 0) {
+        $("#faults").remove();
+        var _data = data.scadaFaults;
+        for (i = 0; i < data.length; i++) {
+            _string += "<div id='faults' data-role='collapsible'><h3>" + data[i].CASENUM + "</h3>";
+            _string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
+            _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
+            _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
+            _string += "<div class='accdEntry'><b>Start Date:</b> " + data[i].DATESTRT + "</div>";
+            _string += "<div class='accdEntry'><b>Element:</b> " + data[i].ELEMENT + "</div>";
+            _string += "<div class='accdEntry'><b>Element ID:</b> " + data[i].ELEMENTID + "</div>";
+            _string += "<div class='accdEntry'><b>Pole Number:</b> " + data[i].POLENUM + "</div>";
+            _string += "<div class='accdEntry'><b>Case Status:</b> " + data[i].CASESTATUS + "</div>";
+            _string += "</div>";
+        }
+        _string += "</div>";
+    }
+
+    if (data[0].scadaSubs.length > 0) {
+        $("#subs").remove();
+        var _data = data[0].scadaSubs;
+        for (i = 0; i < _data.length; i++) {
+            _string += "<div id='subs' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
+            _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
+            _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS  + "</div>";
+            _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
+            _string += "</div>";
+        }
+        _string += "</div>";
+    }
+
+    //if (data.length == 0) {
+    //    $("#outage").html("No Outages at this time");
+    //}
+    
+    //$("#scadaoutage").html("");
+    //$("#scadaoutage").html(_string.toString());
+    //$('#scadaoutage [data-role=collapsible-set]').collapsibleset();
+
+    
+    $("#outageList").append(_string.toString());
+    $('#outageList [data-role=collapsible-set]').collapsibleset();
+
+    navigator.notification.beep(1);
+    navigator.notification.vibrate(1000);
+
     $("#spinCont").hide();
 }
 
@@ -256,16 +361,16 @@ function getSpinner() {
 
 function AVLResults(data) {
     if (data.length > 0) {
+        $("#avl").html("");
+
         var _string = "";
         for (i = 0; i < data.length; i++) {
-            _string += "<div>" + data[i].VID + ": " + data[i].LOG_DATETIME + "</div>";
+            _string += "<div class='accdEntry'>VID: " + data[i].VID + " - " + data[i].LOG_DATETIME + "</div>";
         }
 
-        $("#avl").html("");
         $("#avl").html(_string.toString());
+        $('#outageList [data-role=collapsible-set]').collapsibleset();
     }
-    else if (data.length == 0) {
-        $("#avl").html("No AVL at this time");
-    }
+    
     $("#spinCont").hide();
 }
