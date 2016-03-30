@@ -1,6 +1,15 @@
 ﻿var tryingToReconnect = false, user;
 
 $(document).ready(function () {
+    
+    if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
+        $("body").css("background-color", "black");
+        $("#popupLoginWindow").css("background-color", "#efecec");
+        $(".pg").css({ "margin-top": "20px" });
+    }
+
+
+
     if (navigator.onLine) {
         checkCookie();
 
@@ -99,12 +108,7 @@ function checkLogin() {
                 $("#loginError").text("");
                 
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
-                //if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
-                //    $("body").css("background-color", "black");
-                //    $(".pg").css({ "margin-top": "20px" });
-                //}
-
-
+                
                 $("#spinCont").show();
 
                 if (localStorage.fcemcOMS_uname == undefined) {
