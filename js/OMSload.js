@@ -99,10 +99,11 @@ function checkLogin() {
                 $("#loginError").text("");
                 
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
-                if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
-                    $("body").css("background-color", "black");
-                    $(".pg").css({ "margin-top": "20px" });
-                }
+                //if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
+                //    $("body").css("background-color", "black");
+                //    $(".pg").css({ "margin-top": "20px" });
+                //}
+
 
                 $("#spinCont").show();
 
@@ -263,71 +264,64 @@ function listOutages(data) {
 
 function listSCADAOutages(data) {
 
-    var _string = "<div data-role='collapsible-set'>";
+    if (data[0].scadaCircuits.length != 0 || data[0].scadaFaults.length != 0 || data[0].scadaSubs.length != 0) {
 
-    if (data[0].scadaCircuits.length > 0) {
-        $("#ckts").remove();
-        var _data = data.scadaCircuits;
-        for (i = 0; i < data.length; i++) {
-            _string += "<div id='ckts' data-role='collapsible'><h3>" + data[i].CASENUM + "</h3>";
-            _string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
-            _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
-            _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
-            _string += "<div class='accdEntry'><b>Start Date:</b> " + data[i].DATESTRT + "</div>";
-            _string += "<div class='accdEntry'><b>Element:</b> " + data[i].ELEMENT + "</div>";
-            _string += "<div class='accdEntry'><b>Element ID:</b> " + data[i].ELEMENTID + "</div>";
-            _string += "<div class='accdEntry'><b>Pole Number:</b> " + data[i].POLENUM + "</div>";
-            _string += "<div class='accdEntry'><b>Case Status:</b> " + data[i].CASESTATUS + "</div>";
+        var _string = "<div data-role='collapsible-set'>";
+
+        if (data[0].scadaCircuits.length > 0) {
+            $("#ckts").remove();
+            var _data = data[0].scadaCircuits;
+            for (i = 0; i < _data.length; i++) {
+                _string += "<div id='ckts' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
+                _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
+                _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS + "</div>";
+                _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
+                _string += "</div>";
+            }
             _string += "</div>";
         }
-        _string += "</div>";
-    }
 
-    if (data[0].scadaFaults.length > 0) {
-        $("#faults").remove();
-        var _data = data.scadaFaults;
-        for (i = 0; i < data.length; i++) {
-            _string += "<div id='faults' data-role='collapsible'><h3>" + data[i].CASENUM + "</h3>";
-            _string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
-            _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
-            _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
-            _string += "<div class='accdEntry'><b>Start Date:</b> " + data[i].DATESTRT + "</div>";
-            _string += "<div class='accdEntry'><b>Element:</b> " + data[i].ELEMENT + "</div>";
-            _string += "<div class='accdEntry'><b>Element ID:</b> " + data[i].ELEMENTID + "</div>";
-            _string += "<div class='accdEntry'><b>Pole Number:</b> " + data[i].POLENUM + "</div>";
-            _string += "<div class='accdEntry'><b>Case Status:</b> " + data[i].CASESTATUS + "</div>";
+        if (data[0].scadaFaults.length > 0) {
+            $("#faults").remove();
+            var _data = data[0].scadaFaults;
+            for (i = 0; i < _data.length; i++) {
+                _string += "<div id='faults' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
+                _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
+                _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS + "</div>";
+                _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
+                _string += "</div>";
+            }
             _string += "</div>";
         }
-        _string += "</div>";
-    }
 
-    if (data[0].scadaSubs.length > 0) {
-        $("#subs").remove();
-        var _data = data[0].scadaSubs;
-        for (i = 0; i < _data.length; i++) {
-            _string += "<div id='subs' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
-            _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
-            _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS  + "</div>";
-            _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
+        if (data[0].scadaSubs.length > 0) {
+            $("#subs").remove();
+            var _data = data[0].scadaSubs;
+            for (i = 0; i < _data.length; i++) {
+                _string += "<div id='subs' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
+                _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
+                _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS + "</div>";
+                _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
+                _string += "</div>";
+            }
             _string += "</div>";
         }
-        _string += "</div>";
+
+        //if (data.length == 0) {
+        //    $("#outage").html("No Outages at this time");
+        //}
+
+        //$("#scadaoutage").html("");
+        //$("#scadaoutage").html(_string.toString());
+        //$('#scadaoutage [data-role=collapsible-set]').collapsibleset();
+
+
+        $("#outageList").append(_string.toString());
+        $('#outageList [data-role=collapsible-set]').collapsibleset();
+
+        navigator.notification.beep(1);
+        navigator.notification.vibrate(1000);
     }
-
-    //if (data.length == 0) {
-    //    $("#outage").html("No Outages at this time");
-    //}
-    
-    //$("#scadaoutage").html("");
-    //$("#scadaoutage").html(_string.toString());
-    //$('#scadaoutage [data-role=collapsible-set]').collapsibleset();
-
-    
-    $("#outageList").append(_string.toString());
-    $('#outageList [data-role=collapsible-set]').collapsibleset();
-
-    navigator.notification.beep(1);
-    navigator.notification.vibrate(1000);
 
     $("#spinCont").hide();
 }
