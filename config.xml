@@ -6,7 +6,7 @@
         id        = "com.fcemc.FCEMComs"
         version   = "1.0.0">
 
-  <name>FCEMC-Outage Management</name>
+  <name>FCEMC-OMS</name>
 
   <description>
     Four County EMC - Mobile Outage Management Application
