@@ -311,18 +311,10 @@ function listSCADAOutages(data) {
             }
             _string += "</div>";
         }
-
-        //if (data.length == 0) {
-        //    $("#outage").html("No Outages at this time");
-        //}
-
-        //$("#scadaoutage").html("");
-        //$("#scadaoutage").html(_string.toString());
-        //$('#scadaoutage [data-role=collapsible-set]').collapsibleset();
-
-
-        $("#outageList").append(_string.toString());
-        $('#outageList [data-role=collapsible-set]').collapsibleset();
+        
+        $("#scadaoutage").html("");
+        $("#scadaoutage").html(_string.toString());
+        $('#scadaoutage [data-role=collapsible-set]').collapsibleset();
 
         navigator.notification.beep(1);
         navigator.notification.vibrate(1000);
