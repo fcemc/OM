@@ -97,8 +97,8 @@ $(document).ready(function () {
 //region Login&Cookies
 function checkLogin() {
     user = $("#un").val().trim();
-    
-    var paramItems = user + "|" + $("#pw").val().trim();
+    var _pw = $("#pw").val().trim();
+    var paramItems = user + "|" + _pw;
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,
