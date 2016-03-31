@@ -134,7 +134,8 @@
            android:largeScreens="false"
            android:smallScreens="false" />
     <application android:theme="@android:style/Theme.NoTitleBar" >
-      <activity android:theme="@android:style/Theme.NoTitleBar.Fullscreen" ></activity>
+      <!--<activity android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >        
+      </activity>-->
     </application>
   </gap:config-file>
   
