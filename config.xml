@@ -31,7 +31,7 @@
   <preference name="target-device"              value="universal" />
   <!-- all: possible values handset, tablet, or universal -->
   
-  <preference name="fullscreen"                 value="true" />
+  <preference name="fullscreen"                 value="false" />
   <!-- all: hides the status bar at the top of the screen -->
   
   
