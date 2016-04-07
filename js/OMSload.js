@@ -113,7 +113,7 @@ function checkLogin() {
                 $("#spinCont").show();
 
                 if (localStorage.fcemcOMS_uname == undefined) {
-                    setCookie(user, _pw, 20); //expires 20 days from inital login
+                    setCookie(user, _pw, 1); //expires 1 day from inital login
                 }
 
                 register();
@@ -161,6 +161,9 @@ function checkCookie() {
             $("#un").val(localStorage.fcemcOMS_uname);
             $("#pw").val(localStorage.fcemcOMS_pass);
         }
+        else {
+            localStorage.clear();
+        }
     }
 }
 //endregion
@@ -187,6 +190,7 @@ function register() {
 
 function initLoad() {
     //// do these for inital data loading...
+    $("#spinCont").show();
     getAVL();
     getOutages();
     getSCADAOutages();
@@ -211,10 +215,12 @@ function getOutages() {
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
+        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             listOutages(results.getOUTAGECASESResult);
+            //listOutages(results.getOUTAGECASES_TESTResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
@@ -250,6 +256,16 @@ function listOutages(data) {
             _string += "<div class='accdEntry'><b>Element ID:</b> " + data[i].ELEMENTID + "</div>";
             _string += "<div class='accdEntry'><b>Pole Number:</b> " + data[i].POLENUM + "</div>";
             _string += "<div class='accdEntry'><b>Case Status:</b> " + data[i].CASESTATUS + "</div>";
+
+            //Calls Bundle
+            if (data[i].CASESTATUS === "Predicted") {
+                _string += '<div><button style="background-color:orange;" onclick="confirmOtage(\'' + data[i].CASENUM.toString() + '\');" class="ui-btn ui-corner-all">Confirm Outage</button></div>';
+            }
+            else if (data[i].CASESTATUS === "Confirmed" || data[i].CASESTATUS === "CauseUnknown")
+            {
+                _string += '<div><button style="background-color:red;" onclick="processOutage(\'' + data[i].CASENUM.toString() + '\');" class="ui-btn ui-corner-all">Close Outage</button></div>';
+            }          
+
             _string += "</div>";
         }
         _string += "</div>";
@@ -262,7 +278,7 @@ function listOutages(data) {
         navigator.notification.vibrate(1000);
     }
     else if (data.length == 0) {
-        //$("#outage").html("No Outages at this time");
+        $("#outage").html("");
     }
     $("#spinCont").hide();
 }
@@ -274,50 +290,49 @@ function listSCADAOutages(data) {
         var _string = "<div data-role='collapsible-set'>";
 
         if (data[0].scadaCircuits.length > 0) {
-            $("#ckts").remove();
             var _data = data[0].scadaCircuits;
             for (i = 0; i < _data.length; i++) {
-                _string += "<div id='ckts' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
+                _string += "<div data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
                 _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
                 _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS + "</div>";
                 _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
                 _string += "</div>";
             }
-            _string += "</div>";
         }
 
         if (data[0].scadaFaults.length > 0) {
-            $("#faults").remove();
             var _data = data[0].scadaFaults;
             for (i = 0; i < _data.length; i++) {
-                _string += "<div id='faults' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
+                _string += "<div data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
                 _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
                 _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS + "</div>";
                 _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
                 _string += "</div>";
             }
-            _string += "</div>";
         }
 
         if (data[0].scadaSubs.length > 0) {
-            $("#subs").remove();
             var _data = data[0].scadaSubs;
             for (i = 0; i < _data.length; i++) {
-                _string += "<div id='subs' data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
+                _string += "<div data-role='collapsible'><h3>" + _data[i].CLASS + " " + _data[i].ID + "</h3>";
                 _string += "<div class='accdEntry'><b>ID:</b> " + _data[i].ID + "</div>";
                 _string += "<div class='accdEntry'><b>Status:</b> " + _data[i].STATUS + "</div>";
                 _string += "<div class='accdEntry'><b>Start Time:</b> " + _data[i].TIME + "</div>";
                 _string += "</div>";
             }
-            _string += "</div>";
         }
         
+        _string += "</div>";
+
         $("#scadaoutage").html("");
         $("#scadaoutage").html(_string.toString());
         $('#scadaoutage [data-role=collapsible-set]').collapsibleset();
 
         navigator.notification.beep(1);
         navigator.notification.vibrate(1000);
+    }
+    else {
+        $("#scadaoutage").html("");
     }
 
     $("#spinCont").hide();
@@ -364,4 +379,43 @@ function AVLResults(data) {
     }
     
     $("#spinCont").hide();
+}
+
+function confirmOtage(outageNum) {    
+    if (confirm("Are you sure you want to Confirm outage?")) {
+        //send data to confirm outage
+    }
+    else {
+        //do nothing
+    }
+}
+
+function processOutage(outageNum) {
+    $("#page2").on("pagebeforeshow", function (event) {
+        $("#outLbl").text(outageNum);
+        $("#select-native-1").val("0").change();
+        $("#select-native-2").val("0").change();
+    });
+    $.mobile.pageContainer.pagecontainer("change", "#page2");
+}
+
+function closeOtage() {
+    var outageNum = $("#outLbl").text();
+    var cause = $("#select-native-1 option:selected").text();
+    var weateher = $("#select-native-2 option:selected").text();
+    var timeStamp =  new Date();
+    //timeStamp.getDate();
+
+    if (cause != "" && weateher != "") {
+        initLoad();
+        $.mobile.pageContainer.pagecontainer("change", "#page1");
+        $("#outLbl").text("");
+    }
+    else {
+        alert("Make sure a Cause and Wheater option are selected!");
+    }
+}
+
+function cancelOtage() {  
+    $.mobile.pageContainer.pagecontainer("change", "#page1");
 }
