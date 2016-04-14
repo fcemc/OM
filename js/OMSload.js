@@ -35,12 +35,18 @@ $(document).ready(function () {
             "hideMethod": "fadeOut"
         }
 
+        
+
         $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
 
         $.connection.hub.logging = true;
 
         var mainChat = $.connection.mainHub;
         mainChat.client.broadcastMessage = function (data, option) {
+
+            cordova.plugins.notification.badge.set(10);
+
+            console.log("Test");
 
             if (tryingToReconnect)  //catch in case reconnected doesn't get called
             {
@@ -214,13 +220,13 @@ function getAVL() {
 function getOutages() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
-        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
+        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
-            listOutages(results.getOUTAGECASESResult);
-            //listOutages(results.getOUTAGECASES_TESTResult);
+            //listOutages(results.getOUTAGECASESResult);
+            listOutages(results.getOUTAGECASES_TESTResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
