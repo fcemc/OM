@@ -1,4 +1,4 @@
-﻿var tryingToReconnect = false, user;
+﻿var tryingToReconnect = false, user, badgeCount = 0;
 
 $(document).ready(function () {
 
@@ -9,6 +9,72 @@ $(document).ready(function () {
         $(".pg").css({ "margin-top": "20px" });
     }
 
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "0",
+        "hideDuration": "0",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
+
+    $.connection.hub.logging = true;
+
+    var mainChat = $.connection.mainHub;
+    mainChat.client.broadcastMessage = function (data, option) {
+        cordova.plugins.notification.badge.set(badgeCount += 1);
+        
+        if (tryingToReconnect)  //catch in case reconnected doesn't get called
+        {
+            tryingToReconnect = false;
+        }
+
+        switch (option) {
+            case "AVL":
+                AVLResults(data);
+                break;
+            case "OUTAGE":
+                listOutages(data);
+                break;
+            case "SCADA":
+                listSCADAOutages(data);
+                break;
+            default:
+        }
+    };
+
+    $.connection.hub.start().done(function () {
+        //init();  //intalize after login is validated
+    });
+
+    $.connection.hub.disconnected(function () {
+        if (tryingToReconnect) {
+            setTimeout(function () {
+                $.connection.hub.start().done(function () { init(); });
+            }, 5000); // Restart connection after 5 seconds.
+        }
+    });
+
+    $.connection.hub.reconnecting(function () {
+        toastr["error"]("Network connection lost! Trying to restore connection...");
+        tryingToReconnect = true;
+    });
+
+    $.connection.hub.reconnected(function () {
+        toastr["success"]("Connection restored!");
+        tryingToReconnect = false;
+    });
 
 
     if (navigator.onLine) {
@@ -17,77 +83,11 @@ $(document).ready(function () {
         getSpinner();
         $("#spinCont").hide();
 
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-bottom-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "0",
-            "hideDuration": "0",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
 
-        var pushNotification = window.plugins.pushNotification;
 
-        $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
 
-        $.connection.hub.logging = true;
 
-        var mainChat = $.connection.mainHub;
-        mainChat.client.broadcastMessage = function (data, option) {
 
-            pushNotification.setApplicationIconBadgeNumber("Test", 0);
-
-            console.log("Test");
-
-            if (tryingToReconnect)  //catch in case reconnected doesn't get called
-            {
-                tryingToReconnect = false;
-            }
-
-            switch (option) {
-                case "AVL":
-                    AVLResults(data);
-                    break;
-                case "OUTAGE":
-                    listOutages(data);
-                    break;
-                case "SCADA":
-                    listSCADAOutages(data);
-                    break;
-                default:
-            }
-        };
-
-        $.connection.hub.start().done(function () {
-            //init();  //intalize after login is validated
-        });
-
-        $.connection.hub.disconnected(function () {
-            if (tryingToReconnect) {
-                setTimeout(function () {
-                    $.connection.hub.start().done(function () { init(); });
-                }, 5000); // Restart connection after 5 seconds.
-            }
-        });
-
-        $.connection.hub.reconnecting(function () {
-            toastr["error"]("Network connection lost! Trying to restore connection...");
-            tryingToReconnect = true;
-        });
-
-        $.connection.hub.reconnected(function () {
-            toastr["success"]("Connection restored!");
-            tryingToReconnect = false;
-        });
     }
     else {
         var r = confirm("No network connection detected, check setting and try again!");
@@ -113,9 +113,9 @@ function checkLogin() {
         success: function (results) {
             if (results.authenticateYouSirResult) {
                 $("#loginError").text("");
-                
+
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
-                
+
                 $("#spinCont").show();
 
                 if (localStorage.fcemcOMS_uname == undefined) {
@@ -124,7 +124,7 @@ function checkLogin() {
 
                 register();
                 initLoad();
-                
+
             }
             else {
                 window.localStorage.clear();
@@ -267,10 +267,9 @@ function listOutages(data) {
             if (data[i].CASESTATUS === "Predicted") {
                 _string += '<div><button style="background-color:orange;" onclick="confirmOtage(\'' + data[i].CASENUM.toString() + '\');" class="ui-btn ui-corner-all">Confirm Outage</button></div>';
             }
-            else if (data[i].CASESTATUS === "Confirmed" || data[i].CASESTATUS === "CauseUnknown")
-            {
+            else if (data[i].CASESTATUS === "Confirmed" || data[i].CASESTATUS === "CauseUnknown") {
                 _string += '<div><button style="background-color:red;" onclick="processOutage(\'' + data[i].CASENUM.toString() + '\');" class="ui-btn ui-corner-all">Close Outage</button></div>';
-            }          
+            }
 
             _string += "</div>";
         }
@@ -327,7 +326,7 @@ function listSCADAOutages(data) {
                 _string += "</div>";
             }
         }
-        
+
         _string += "</div>";
 
         $("#scadaoutage").html("");
@@ -383,11 +382,11 @@ function AVLResults(data) {
         $("#avl").html(_string.toString());
         $('#outageList [data-role=collapsible-set]').collapsibleset();
     }
-    
+
     $("#spinCont").hide();
 }
 
-function confirmOtage(outageNum) {    
+function confirmOtage(outageNum) {
     if (confirm("Are you sure you want to Confirm outage?")) {
         //send data to confirm outage
     }
@@ -409,7 +408,7 @@ function closeOtage() {
     var outageNum = $("#outLbl").text();
     var cause = $("#select-native-1 option:selected").text();
     var weateher = $("#select-native-2 option:selected").text();
-    var timeStamp =  new Date();
+    var timeStamp = new Date();
     //timeStamp.getDate();
 
     if (cause != "" && weateher != "") {
@@ -422,6 +421,6 @@ function closeOtage() {
     }
 }
 
-function cancelOtage() {  
+function cancelOtage() {
     $.mobile.pageContainer.pagecontainer("change", "#page1");
 }
