@@ -10,13 +10,13 @@ $(document).ready(function () {
     }
 
     var push = PushNotification.init({
-        "android": { "senderID": "12345679" },
+        //"android": { "senderID": "12345679" },
         "ios": {
             "alert": "true",
             "badge": "true",
             "sound": "true"
         },
-        "windows": {}
+        //"windows": {}
     });
 
     push.on('registration', function (data) {
