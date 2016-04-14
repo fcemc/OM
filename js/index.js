@@ -34,46 +34,6 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-
-        $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
-
-        $.connection.hub.logging = true;
-
-        var mainChat = $.connection.mainHub;
-        mainChat.client.broadcastMessage = function (data, option) {
-            cordova.plugins.notification.badge.set(badgeCount += 1);
-
-            if (tryingToReconnect)  //catch in case reconnected doesn't get called
-            {
-                tryingToReconnect = false;
-            }
-
-            switch (option) {
-                case "AVL":
-                    AVLResults(data);
-                    break;
-                case "OUTAGE":
-                    listOutages(data);
-                    break;
-                case "SCADA":
-                    listSCADAOutages(data);
-                    break;
-                default:
-            }
-        };
-
-        $.connection.hub.start().done(function () {
-            //init();  //intalize after login is validated
-        });
-
-        $.connection.hub.disconnected(function () {
-            if (tryingToReconnect) {
-                setTimeout(function () {
-                    $.connection.hub.start().done(function () { init(); });
-                }, 5000); // Restart connection after 5 seconds.
-            }
-        });
-
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
