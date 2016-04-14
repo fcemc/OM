@@ -84,7 +84,7 @@
   <gap:plugin name="org.apache.cordova.splashscreen" />
   <gap:plugin name="org.apache.cordova.vibration" />
   <gap:plugin name="org.apache.cordova.statusbar" />
-  <gap:plugin name="com.adobe.plugins.pushplugin" />
+  <gap:plugin name="com.phonegap.plugins.pushplugin" />
   <gap:plugin name="de.appplant.cordova.plugin.badge" source="npm" />
 
   <!-- Third party plugins -->
