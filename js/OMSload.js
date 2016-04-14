@@ -27,44 +27,44 @@ $(document).ready(function () {
         "hideMethod": "fadeOut"
     }
 
-    $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
+    //$.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
 
-    $.connection.hub.logging = true;
+    //$.connection.hub.logging = true;
 
-    var mainChat = $.connection.mainHub;
-    mainChat.client.broadcastMessage = function (data, option) {
-        cordova.plugins.notification.badge.set(badgeCount += 1);
+    //var mainChat = $.connection.mainHub;
+    //mainChat.client.broadcastMessage = function (data, option) {
+    //    cordova.plugins.notification.badge.set(badgeCount += 1);
         
-        if (tryingToReconnect)  //catch in case reconnected doesn't get called
-        {
-            tryingToReconnect = false;
-        }
+    //    if (tryingToReconnect)  //catch in case reconnected doesn't get called
+    //    {
+    //        tryingToReconnect = false;
+    //    }
 
-        switch (option) {
-            case "AVL":
-                AVLResults(data);
-                break;
-            case "OUTAGE":
-                listOutages(data);
-                break;
-            case "SCADA":
-                listSCADAOutages(data);
-                break;
-            default:
-        }
-    };
+    //    switch (option) {
+    //        case "AVL":
+    //            AVLResults(data);
+    //            break;
+    //        case "OUTAGE":
+    //            listOutages(data);
+    //            break;
+    //        case "SCADA":
+    //            listSCADAOutages(data);
+    //            break;
+    //        default:
+    //    }
+    //};
 
-    $.connection.hub.start().done(function () {
-        //init();  //intalize after login is validated
-    });
+    //$.connection.hub.start().done(function () {
+    //    //init();  //intalize after login is validated
+    //});
 
-    $.connection.hub.disconnected(function () {
-        if (tryingToReconnect) {
-            setTimeout(function () {
-                $.connection.hub.start().done(function () { init(); });
-            }, 5000); // Restart connection after 5 seconds.
-        }
-    });
+    //$.connection.hub.disconnected(function () {
+    //    if (tryingToReconnect) {
+    //        setTimeout(function () {
+    //            $.connection.hub.start().done(function () { init(); });
+    //        }, 5000); // Restart connection after 5 seconds.
+    //    }
+    //});
 
     $.connection.hub.reconnecting(function () {
         toastr["error"]("Network connection lost! Trying to restore connection...");
