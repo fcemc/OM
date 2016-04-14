@@ -85,9 +85,8 @@
   <gap:plugin name="org.apache.cordova.vibration" />
   <gap:plugin name="org.apache.cordova.statusbar" />
   <gap:plugin name="com.phonegap.plugins.pushplugin" />
-  <gap:plugin name="de.appplant.cordova.plugin.badge" />
-  
-  <plugin name="de.appplant.cordova.plugin.local-notification" spec="0.8.1" source="pgb" />
+  <!--<gap:plugin name="de.appplant.cordova.plugin.badge" />-->  
+  <plugin name="de.appplant.cordova.plugin.local-notification"/>
   
   
   <!-- Third party plugins -->
