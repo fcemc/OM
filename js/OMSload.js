@@ -1,4 +1,4 @@
-﻿var tryingToReconnect = false, user, badgeCount = 0;
+﻿var tryingToReconnect = false, user;
 
 $(document).ready(function () {
 
@@ -8,36 +8,6 @@ $(document).ready(function () {
         $("div[role='dialog']").css("background-color", "#efecec");
         $(".pg").css({ "margin-top": "20px" });
     }
-
-    var push = PushNotification.init({
-        //"android": { "senderID": "12345679" },
-        "ios": {
-            "alert": "true",
-            "badge": "true",
-            "sound": "true"
-        },
-        //"windows": {}
-    });
-
-    push.on('registration', function (data) {
-        var _d = data;
-        // data.registrationId 
-    });
-
-    push.on('notification', function (data) {
-        var _d = data;
-        // data.message, 
-        // data.title, 
-        // data.count, 
-        // data.sound, 
-        // data.image, 
-        // data.additionalData 
-    });
-
-    push.on('error', function (e) {
-        var _e = e;
-        // e.message 
-    });
 
 
 
@@ -65,7 +35,7 @@ $(document).ready(function () {
             "hideMethod": "fadeOut"
         }
 
-        
+        var pushNotification = window.plugins.pushNotification;
 
         $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
 
@@ -74,8 +44,7 @@ $(document).ready(function () {
         var mainChat = $.connection.mainHub;
         mainChat.client.broadcastMessage = function (data, option) {
 
-            cordova.plugins.notification.badge.set(badgeCount += 1);
-            
+            pushNotification.setApplicationIconBadgeNumber("Test", 0);
 
             console.log("Test");
 
