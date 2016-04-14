@@ -44,7 +44,7 @@ $(document).ready(function () {
         var mainChat = $.connection.mainHub;
         mainChat.client.broadcastMessage = function (data, option) {
 
-            cordova.plugins.notification.badge.set(badgeCount + 1);
+            cordova.plugins.notification.badge.set(badgeCount += 1);
 
             console.log("Test");
 
