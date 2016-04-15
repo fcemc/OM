@@ -42,6 +42,9 @@ $(document).ready(function () {
 
 
     if (navigator.onLine) {
+        var phoneModel = device.model;
+        var phoneUuid = device.uuid;
+
         checkCookie();
 
         getSpinner();
