@@ -9,42 +9,8 @@ $(document).ready(function () {
         $(".pg").css({ "margin-top": "20px" });
     }
 
-    //var push = PushNotification.init({
-    //    //"android": { "senderID": "12345679" },
-    //    "ios": {
-    //        "alert": "true",
-    //        "badge": "true",
-    //        "sound": "true"
-    //    },
-    //    //"windows": {}
-    //});
-
-    //push.on('registration', function (data) {
-    //    var _d = data;
-    //    // data.registrationId 
-    //});
-
-    //push.on('notification', function (data) {
-    //    var _d = data;
-    //    // data.message, 
-    //    // data.title, 
-    //    // data.count, 
-    //    // data.sound, 
-    //    // data.image, 
-    //    // data.additionalData 
-    //});
-
-    //push.on('error', function (e) {
-    //    var _e = e;
-    //    // e.message 
-    //});
-
-
-
-    if (navigator.onLine) {        
-       
+    if (navigator.onLine) {               
         checkCookie();
-
         getSpinner();
         $("#spinCont").hide();
 
@@ -72,8 +38,6 @@ $(document).ready(function () {
 
         var mainChat = $.connection.mainHub;
         mainChat.client.broadcastMessage = function (data, option) {
-
-            cordova.plugins.notification.badge.set(badgeCount += 1);
 
             if (tryingToReconnect)  //catch in case reconnected doesn't get called
             {
