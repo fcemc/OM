@@ -1,6 +1,6 @@
 ////https://github.com/phonegap-build/PushPlugin/blob/master/Example/www/index.html
 
-//var pushNotification;
+var pushNotification;
 
 var app = {
     // Application Constructor
