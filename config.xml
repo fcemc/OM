@@ -85,7 +85,13 @@
   <gap:plugin name="org.apache.cordova.vibration" />
   <gap:plugin name="org.apache.cordova.statusbar" />
   
-  <gap:plugin name="com.phonegap.plugins.pushplugin" />  
+  <!--<gap:plugin name="com.phonegap.plugins.pushplugin" />-->  
+  
+  <preference name="android-build-tool" value="gradle" />
+  <plugin name="phonegap-plugin-push" source="npm">
+      <param name="SENDER_ID" value="938587483259" />
+  </plugin>
+  
   <gap:plugin name="de.appplant.cordova.plugin.badge" />
   
   <!-- Third party plugins -->
