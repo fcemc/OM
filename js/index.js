@@ -13,7 +13,8 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
+        var _id = id;
         //var parentElement = document.getElementById(id);
         //var listeningElement = parentElement.querySelector('.listening');
         //var receivedElement = parentElement.querySelector('.received');
@@ -40,7 +41,7 @@ function onDeviceReady() {
         pushNotification = window.plugins.pushNotification;        
         if (device.platform == 'android' || device.platform == 'Android' ||
                 device.platform == 'amazon-fireos') {
-            pushNotification.register(successHandler, errorHandler, { "senderID": "661780372179", "ecb": "onNotification" });		// required!
+            pushNotification.register(successHandler, errorHandler, { "senderID": "18994795059", "ecb": "onNotification" });		// required!            
         } else {
             pushNotification.register(tokenHandler, errorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });	// required!
         }
