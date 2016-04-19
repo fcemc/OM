@@ -36,10 +36,7 @@ function onDeviceReady() {
         }
     }, false);
 
-    try {
-        _did = device.id;
-        _uuid = device._uuid;
-
+    try {     
         pushNotification = window.plugins.pushNotification;        
         if (device.platform == 'android' || device.platform == 'Android' ||
                 device.platform == 'amazon-fireos') {
@@ -73,10 +70,11 @@ function onNotificationAPN(e) {
     }
 }
 
-function tokenHandler(result) {
-    var r = result;
+function tokenHandler(result) {    
     // Your iOS push server needs to know the token before it can push to this device
     // here is where you might want to send it the token for later use.
+    _did = result;
+    _uuid = device.uuid;
 }
 
 
@@ -84,11 +82,11 @@ function tokenHandler(result) {
 function onNotification(e) {
     switch (e.event) {
         case 'registered':
-            if (e.regid.length > 0) {
-                $("#app-status-ul").append('<li>REGISTERED -> REGID:' + e.regid + "</li>");
+            if (e.regid.length > 0) {                
                 // Your GCM push server needs to know the regID before it can push to this device
                 // here is where you might want to send it the regID for later use.
-                console.log("regID = " + e.regid);
+                _did = e.regid;
+                _uuid = device.uuid;
             }
             break;
 
@@ -129,7 +127,7 @@ function onNotification(e) {
     }
 }
 
-function successHandler(result) {
+function successHandler(result) {    
     var r = result;
 }
 
