@@ -1,6 +1,6 @@
-////https://github.com/phonegap-build/PushPlugin/blob/master/Example/www/index.html
+//https://github.com/phonegap-build/PushPlugin/blob/master/Example/www/index.html
 
-var pushNotification;
+var pushNotification, _uuid, _did;
 
 var app = {
     // Application Constructor
@@ -37,6 +37,9 @@ function onDeviceReady() {
     }, false);
 
     try {
+        _did = device.id;
+        _uuid = device._uuid;
+
         pushNotification = window.plugins.pushNotification;        
         if (device.platform == 'android' || device.platform == 'Android' ||
                 device.platform == 'amazon-fireos') {
@@ -69,6 +72,13 @@ function onNotificationAPN(e) {
         pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);
     }
 }
+
+function tokenHandler(result) {
+    var r = result;
+    // Your iOS push server needs to know the token before it can push to this device
+    // here is where you might want to send it the token for later use.
+}
+
 
 // handle GCM notifications for Android
 function onNotification(e) {
@@ -117,12 +127,6 @@ function onNotification(e) {
             $("#app-status-ul").append('<li>EVENT -> Unknown, an event was received and we do not know what it is</li>');
             break;
     }
-}
-
-function tokenHandler(result) {
-    var r = result;
-    // Your iOS push server needs to know the token before it can push to this device
-    // here is where you might want to send it the token for later use.
 }
 
 function successHandler(result) {

@@ -1,7 +1,6 @@
 ﻿var tryingToReconnect = false, user, badgeCount = 0;
 
 $(document).ready(function () {
-
     //adjust for status bar in iOS
     if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
         $("body").css("background-color", "black");
@@ -128,7 +127,7 @@ function checkLogin() {
                 $("#loginError").text("No network connection - cannot login!");
             }
             else {
-                //$("#loginError").text("Login Unsucessful");
+                $("#loginError").text("Login Unsucessful");
             }
         }
     });
