@@ -1,11 +1,14 @@
-﻿var tryingToReconnect = false, user, badgeCount = 0,_did, _uuid;
-
-function passInfo(a, b) {
-    _did = a;
-    _uuid = b;
-}
+﻿var tryingToReconnect = false, user, badgeCount = 0;
 
 $(document).ready(function () {
+
+    if (localStorage.fcemcOMS_did == undefined) {
+        var _did = localStorage.fcemcOMS_did;
+        var _uuid = localStorage.fcemcOMS_uuid;        
+    }
+    
+
+
     //adjust for status bar in iOS
     if (/iPad|iPod|iPhone/i.test(navigator.userAgent)) {
         $("body").css("background-color", "black");

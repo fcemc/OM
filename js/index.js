@@ -1,6 +1,6 @@
 //https://github.com/phonegap-build/PushPlugin/blob/master/Example/www/index.html
 
-var pushNotification, _uuid, _did;
+var pushNotification;
 
 var app = {
     // Application Constructor
@@ -73,10 +73,9 @@ function onNotificationAPN(e) {
 
 function tokenHandler(result) {    
     // Your iOS push server needs to know the token before it can push to this device
-    // here is where you might want to send it the token for later use.
-    _did = result;
-    _uuid = device.uuid;
-    passInfo(_did, _uuid);
+    // here is where you might want to send it the token for later use.    
+    localStorage.setItem("fcemcOMS_did", result);
+    localStorage.setItem("fcemcOMS_uuid", device.uuid);
 
 }
 
@@ -88,9 +87,8 @@ function onNotification(e) {
             if (e.regid.length > 0) {                
                 // Your GCM push server needs to know the regID before it can push to this device
                 // here is where you might want to send it the regID for later use.
-                _did = e.regid;
-                _uuid = device.uuid;
-                passInfo(_did, _uuid);
+                localStorage.setItem("fcemcOMS_did", result);
+                localStorage.setItem("fcemcOMS_uuid", device.uuid);
             }
             break;
 
