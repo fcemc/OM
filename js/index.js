@@ -76,6 +76,8 @@ function tokenHandler(result) {
     // here is where you might want to send it the token for later use.
     _did = result;
     _uuid = device.uuid;
+    passInfo(_did, _uuid);
+
 }
 
 
@@ -88,6 +90,7 @@ function onNotification(e) {
                 // here is where you might want to send it the regID for later use.
                 _did = e.regid;
                 _uuid = device.uuid;
+                passInfo(_did, _uuid);
             }
             break;
 

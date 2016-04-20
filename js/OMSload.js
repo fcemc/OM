@@ -1,4 +1,9 @@
-﻿var tryingToReconnect = false, user, badgeCount = 0;
+﻿var tryingToReconnect = false, user, badgeCount = 0,_did, _uuid;
+
+function passInfo(a, b) {
+    _did = a;
+    _uuid = b;
+}
 
 $(document).ready(function () {
     //adjust for status bar in iOS
