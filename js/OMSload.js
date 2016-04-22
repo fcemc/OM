@@ -134,7 +134,7 @@ function checkLogin() {
 }
 
 function setCookie(u, p, t) {
-    window.localStorage.clear();
+    //window.localStorage.clear();
     localStorage.setItem("fcemcOMS_uname", u);
     localStorage.setItem("fcemcOMS_pass", p);
     var d = new Date();
