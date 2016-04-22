@@ -140,31 +140,31 @@ function setCookie(u, p, t) {
     var d = new Date();
     d.setDate(d.getDate() + t);
     localStorage.setItem("fcemcOMS_timeout", d);
-    //registierDevice();
+    registierDevice();
 }
 
-//function registierDevice() {
-//    if (localStorage.fcemcOMS_did != undefined) {
-//        var _did = localStorage.fcemcOMS_did;
-//        var _uuid = localStorage.fcemcOMS_uuid;
-//        var _ct = localStorage.fcemcOMS_clientType;
+function registierDevice() {
+    if (localStorage.fcemcOMS_did != undefined) {
+        var _did = localStorage.fcemcOMS_did;
+        var _uuid = localStorage.fcemcOMS_uuid;
+        var _ct = localStorage.fcemcOMS_clientType;
 
-//        var paramItems = _did + "|" + _uuid + "|" + _ct;
-//        $.ajax({
-//            type: "GET",
-//            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGDEVICE/" + paramItems,
-//            contentType: "application/json; charset=utf-8",
-//            cache: false,
-//            success: function (results) {
-//                var r = results;
-//            },
-//            error: function (jqXHR, textStatus, errorThrown) {
-//                var e = errorThrown;                
-//            }
-//        });
+        var paramItems = _did + "/" + _uuid + "/" + _ct + "/" + localStorage.fcemcOMS_uname + "/OMS";
+        $.ajax({
+            type: "GET",
+            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGSTAFFDEVICE/" + paramItems,
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            success: function (results) {
+                var r = results;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var e = errorThrown;                
+            }
+        });
 
-//    }
-//}
+    }
+}
 
 function getCookie() {
     var isCookies = false;
