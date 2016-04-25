@@ -44,9 +44,9 @@ $(document).ready(function () {
             }
 
             switch (option) {
-                case "AVL":
-                    AVLResults(data);
-                    break;
+                //case "AVL":
+                //    AVLResults(data);
+                //    break;
                 case "OUTAGE":
                     listOutages(data);
                     break;
@@ -139,6 +139,9 @@ function setCookie(u, p, t) {
     localStorage.setItem("fcemcOMS_pass", p);
     var d = new Date();
     d.setDate(d.getDate() + t);
+    d.setHours(8);
+    d.setMinutes(00);
+    d.setSeconds(00);
     localStorage.setItem("fcemcOMS_timeout", d);
     registierDevice();
 }
@@ -208,39 +211,38 @@ function register() {
     });
 }
 
-function initLoad() {
-    //// do these for inital data loading...
+function initLoad() {    
     $("#spinCont").show();
-    getAVL();
+    //getAVL();
     getOutages();
     getSCADAOutages();
 }
 
-function getAVL() {
-    $.ajax({
-        type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getAVLstatus",
-        contentType: "application/json; charset=utf-8",
-        cache: false,
-        success: function (results) {
-            AVLResults(results.getAVLstatusResult);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            var e = errorThrown;
-        }
-    });
-}
+//function getAVL() {
+//    $.ajax({
+//        type: "GET",
+//        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getAVLstatus",
+//        contentType: "application/json; charset=utf-8",
+//        cache: false,
+//        success: function (results) {
+//            AVLResults(results.getAVLstatusResult);
+//        },
+//        error: function (jqXHR, textStatus, errorThrown) {
+//            var e = errorThrown;
+//        }
+//    });
+//}
 
 function getOutages() {
     $.ajax({
         type: "GET",
-        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
+        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
-            //listOutages(results.getOUTAGECASESResult);
-            listOutages(results.getOUTAGECASES_TESTResult);
+            listOutages(results.getOUTAGECASESResult);
+            //listOutages(results.getOUTAGECASES_TESTResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
@@ -385,21 +387,21 @@ function getSpinner() {
     spinner = new Spinner(opts).spin(target);
 }
 
-function AVLResults(data) {
-    if (data.length > 0) {
-        $("#avl").html("");
+//function AVLResults(data) {
+//    if (data.length > 0) {
+//        $("#avl").html("");
 
-        var _string = "";
-        for (i = 0; i < data.length; i++) {
-            _string += "<div class='accdEntry'>VID: " + data[i].VID + " - " + data[i].LOG_DATETIME + "</div>";
-        }
+//        var _string = "";
+//        for (i = 0; i < data.length; i++) {
+//            _string += "<div class='accdEntry'>VID: " + data[i].VID + " - " + data[i].LOG_DATETIME + "</div>";
+//        }
 
-        $("#avl").html(_string.toString());
-        $('#outageList [data-role=collapsible-set]').collapsibleset();
-    }
+//        $("#avl").html(_string.toString());
+//        $('#outageList [data-role=collapsible-set]').collapsibleset();
+//    }
     
-    $("#spinCont").hide();
-}
+//    $("#spinCont").hide();
+//}
 
 function confirmOtage(outageNum) {    
     if (confirm("Are you sure you want to Confirm outage?")) {
