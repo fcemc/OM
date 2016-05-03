@@ -503,8 +503,12 @@ function preConfirmOutage(oD) {
 }
 
 function confirmOutage() {
-    if (navigator.notification.confirm("Continue confirming outage?", fakeCallback, "Verify:", "Cancel, Ok")) {
-        $("#spinCont").show();
+    $("#spinCont").show();
+    navigator.notification.confirm("Continue confirming outage?", sendConfim, "Verify:", "Cancel, Ok");
+}
+
+function sendConfim() {
+    if (button == 2) {        
         if ($("#tabs").tabs('option', 'active') == 0) {
             //current device
         }
@@ -532,6 +536,7 @@ function confirmOutage() {
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                $("#spinCont").hide();
                 var e = textStatus;
                 outageEventID = "";
                 outagePhase = "";
@@ -542,13 +547,14 @@ function confirmOutage() {
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             }
         });
-
     }
-    else {
+    else if (button == 1) {
+        $("#spinCont").hide();
         outageEventID = "";
         outagePhase = "";
         outageDevice = "";
         $("#confrimLbl").text("");
+        $.mobile.pageContainer.pagecontainer("change", "#page1");
     }
 }
 
@@ -584,7 +590,12 @@ function preRestoreOutage(oD) {
 }
 
 function restoreOutage() {
-    if (navigator.notification.confirm("Continue restoring outage?", fakeCallback, "Verify:", "Cancel, Ok")) {
+    $("#spinCont").show();
+    navigator.notification.confirm("Continue restoring outage?", fakeCallback, "Verify:", "Cancel, Ok");
+}
+
+function sendRestore() {
+    if (button == 2) {
         $("#spinCont").show();
         var cause = $("#select-cause option:selected").val();
         var equip = $("#select-equipment option:selected").val();
@@ -616,14 +627,17 @@ function restoreOutage() {
         }
         else {
             //alert("All selections must be made in order to restore outage!");
+            $("#spinCont").hide();
             navigator.notification.alert("All selections must be made in order to restore outage!", fakeCallback, "Error:", "Ok");
         }
     }
-    else {
+    else if (button == 1) {
+        $("#spinCont").hide();
         outageEventID = "";
         outagePhase = "";
         outageDevice = "";
         $("#restoreLbl").text("");
+        $.mobile.pageContainer.pagecontainer("change", "#page1");
     }
 }
 
