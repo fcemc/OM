@@ -4,16 +4,28 @@
     <title>FCEMC-OMS</title>
 
     <link href="js/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
-    <link href="css/MiniDashbaord.min.css" rel="stylesheet" />
+
+    <link href="css/MiniDashbaord.css" rel="stylesheet" />
+
+
+    <link href="css/StyleSheet.css" rel="stylesheet" />
+
     <link href="css/jquery.mobile.icons.min.css" rel="stylesheet" />
 
     <script src="js/jquery-1.12.2.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
 
+
+
+    <link rel="stylesheet" href="css/themes/my-custom-theme.css" />
+
+
+
+
     <script src="js/toastr.min.js"></script>
     <link href="content/toastr.min.css" rel="stylesheet" />
 
-    <link href="css/StyleSheet.css" rel="stylesheet" />
+
 
     <script src="http://gis.fourcty.org/FCEMCrest/scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="http://gis.fourcty.org/FCEMCrest/signalr/hubs/hubs"></script>
@@ -23,7 +35,7 @@
     <script src="js/jquery.spin.js"></script>
 
     <script src="phonegap.js"></script>
-    
+
 
 </head>
 <body>
@@ -31,13 +43,13 @@
         <div id="spinwheel"></div>
     </div>
 
-    <div class="pg" data-role="page" data-dialog="true" id="pageLogin" data-theme="a">
+    <div class="pg" data-role="page" data-dialog="true" id="pageLogin">
         <div id="popupLoginWindow" style="padding:10px 20px;">
             <h3>Please sign in</h3>
             <label for="un" class="ui-hidden-accessible">Username:</label>
-            <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+            <input type="text" name="user" id="un" value="" placeholder="username">
             <label for="pw" class="ui-hidden-accessible">Password:</label>
-            <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
+            <input type="password" name="pass" id="pw" value="" placeholder="password">
             <a href="" onclick="checkLogin();" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="pop">Submit</a>
             <label class="redbull" id="loginError"></label>
         </div>
@@ -68,83 +80,80 @@
 
     <div class="pg" data-role="page" id="page2">
         <div data-role="header">
-            <h1>Close Outage</h1>
+            <h1>Confirm Outage</h1>
         </div>
-        <div role="main" class="ui-content">
-            Outage Number:<label id="outLbl"></label>
-            <div class="ui-field-contain">
-                <label for="select-native-1">Select Cause:</label>
-                <select name="select-native-1" id="select-native-1">
-                    <option value="0"></option>
-                    <option value="1">Aged Equipment</option>
-                    <option value="2">Animals</option>
-                    <option value="3">Defective Arrester</option>
-                    <option value="4">Defective Conductor</option>
-                    <option value="5">Defective Cutout</option>
-                    <option value="6">Defective Fuse</option>
-                    <option value="7">Defective Fuse Holder</option>
-                    <option value="8">Defective Hot Line Clamp</option>
-                    <option value="9">Defective Insulator</option>
-                    <option value="10">Defective OCR</option>
-                    <option value="11">Defective Pole</option>
-                    <option value="12">Defective Transformer</option>
-                    <option value="13">Fire</option>
-                    <option value="14">Foreign Object</option>
-                    <option value="15">Gun Shot</option>
-                    <option value="16">High Wind Blew Foreign Object on Line</option>
-                    <option value="17">High Wind Broke Tree or Limb</option>
-                    <option value="18">Lightning Blew Fuse in Cutout</option>
-                    <option value="19">Lightning Blew Fuse in Transformer</option>
-                    <option value="20">Lightning Broke Arrester</option>
-                    <option value="21">Lightning Burned Primary down</option>
-                    <option value="22">Lightning Burned up Metering Equip</option>
-                    <option value="23">Lightning Burned up Transformer</option>
-                    <option value="24">Lightning Burned up UG Elbow</option>
-                    <option value="25">Lightning Burned up UG Primary</option>
-                    <option value="26">Lightning Opened OCR</option>
-                    <option value="27">Lightning Tripped CSP Transformer</option>
-                    <option value="28">Overloaded OCR or Cutout</option>
-                    <option value="29">Overloaded Transformer</option>
-                    <option value="30">Poor Connection</option>
-                    <option value="31">Poor Workmanship</option>
-                    <option value="32">Tree Fell, Dead</option>
-                    <option value="33">Tree Grew into Line</option>
-                    <option value="34">Tree or Limb Cut</option>
-                    <option value="35">UG Elbow Defective</option>
-                    <option value="36">UG Primary Defective</option>
-                    <option value="37">UG Primary Cut</option>
-                    <option value="38">UG Service Defective</option>
-                    <option value="39">UG Service Cut</option>
-                    <option value="40">Vehicle</option>
-                    <option value="41">Ice</option>
-                    <option value="42">Customer Trouble</option>
-                    <option value="43">Planned Outage</option>
-                    <option value="44">Substation Outage</option>
-                    <option value="45">Transmission Outage</option>
-                    <option value="46">Cause Not Found</option>
-                    <option value="47">Sub CKT BRK</option>
+        <div role="main" class="ui-content" style="text-align:center;">
+            <div data-role="tabs" id="tabs" class="ui-corner-all">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a id="tab-one" href="#one" data-ajax=" false">Current Device</a></li>
+                        <li><a id="tab-two" href="#two" data-ajax="false">Upsteam Device</a></li>
+                    </ul>
+                </div>
+                <div id="one" class="ui-body-d ui-content" style="background-color:white; color:black;">
+                    <div>Confirm outage on device: <label id="confrimLbl"></label></div>
+                </div>
+                <div id="two" class="ui-body-d ui-content" style="background-color:white; color:black;">
+                    <label for="select-upstream">Confirm outage on upstream device</label>
+                    <select name="select-upstream" id="select-upstream"></select>
+                    <label for="select-phase">Select outage phase for device</label>
+                    <select name="select-phase" id="select-phase">
+                        <option value="A">A Phase</option>
+                        <option value="B">B Phase</option>
+                        <option value="C">C Phase</option>
+                        <option value="AB">AB Phase</option>
+                        <option value="AC">AC Phase</option>
+                        <option value="BC">BC Phase</option>
+                        <option value="ABC">ABC Phase</option>
+                    </select>
+                </div>
+            </div>
 
-                </select>
+            <button style="background-color:black;" onclick="quit();" class="ui-btn ui-corner-all">Cancel</button>
+            <button style="background-color:red;" onclick="confirmOutage();" class="ui-btn ui-corner-all">Confirm Outage</button>
+        </div>
+    </div>
+
+    <div class="pg" data-role="page" id="page3">
+        <div data-role="header">
+            <h1>Restore Outage</h1>
+        </div>
+        <div role="main" class="ui-content" style="color:black;">
+            Restore outgae on device: <label id="restoreLbl"></label>
+            <div class="ui-field-contain">
+                <div>
+                    <label for="select-cause">Outage Cause:</label>
+                </div>
+                <div>
+                    <select name="select-cause" id="select-cause"></select>
+                </div>
             </div>
             <div class="ui-field-contain">
-                <label for="select-native-2">Select Weather:</label>
-                <select name="select-native-2" id="select-native-2">
-                    <option value="0"></option>
-                    <option value="1">Rain</option>
-                    <option value="2">Lightning</option>
-                    <option value="3">Wind</option>
-                    <option value="4">Snow</option>
-                    <option value="5">Ice</option>
-                    <option value="6">Sleet</option>
-                    <option value="7">Extreme Cold</option>
-                    <option value="8">Extreme Heat</option>
-                    <option value="9">Weather Other</option>
-                    <option value="10">Clear/calm</option>
-
-                </select>
+                <div>
+                    <label for="select-weather">Weather Condition:</label>
+                </div>
+                <div>
+                    <select name="select-weather" id="select-weather"></select>
+                </div>
             </div>
-            <button style="background-color:black;" onclick="cancelOtage();" class="ui-btn ui-corner-all">Cancel Outage</button>
-            <button style="background-color:red;" onclick="closeOtage();" class="ui-btn ui-corner-all">Close Outage</button>
+            <div class="ui-field-contain">
+                <div>
+                    <label for="select-equipment">Equipment Failure:</label>
+                </div>
+                <div>
+                    <select name="select-equipment" id="select-equipment"></select>
+                </div>
+            </div>
+            <div class="ui-field-contain">
+                <div>
+                    <label for="select-other">Event:</label>
+                </div>
+                <div>
+                    <select name="select-other" id="select-other"></select>
+                </div>
+            </div>
+            <button style="background-color:black;" onclick="quit();" class="ui-btn ui-corner-all">Cancel</button>
+            <button style="background-color:red;" onclick="restoreOutage();" class="ui-btn ui-corner-all">Close Outage</button>
         </div>
     </div>
 
