@@ -595,7 +595,7 @@ function preRestoreOutage(oD) {
 
 function restoreOutage() {
     $("#spinCont").show();
-    navigator.notification.confirm("Continue restoring outage?", fakeCallback, "Verify:", "Cancel, Ok");
+    navigator.notification.confirm("Continue restoring outage?", sendRestore, "Verify:", "Cancel, Ok");
 }
 
 function sendRestore(button) {
