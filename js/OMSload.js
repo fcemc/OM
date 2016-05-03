@@ -507,7 +507,7 @@ function confirmOutage() {
     navigator.notification.confirm("Continue confirming outage?", sendConfim, "Verify:", "Cancel, Ok");
 }
 
-function sendConfim() {
+function sendConfim(button) {
     if (button == 2) {        
         if ($("#tabs").tabs('option', 'active') == 0) {
             //current device
@@ -594,7 +594,7 @@ function restoreOutage() {
     navigator.notification.confirm("Continue restoring outage?", fakeCallback, "Verify:", "Cancel, Ok");
 }
 
-function sendRestore() {
+function sendRestore(button) {
     if (button == 2) {
         $("#spinCont").show();
         var cause = $("#select-cause option:selected").val();
