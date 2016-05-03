@@ -503,8 +503,7 @@ function preConfirmOutage(oD) {
 }
 
 function confirmOutage() {
-
-    if(navigator.notification.confirm("Continue confirming outage?", networkIssue, "Confirm:", "Cancel, Ok")){
+    if (navigator.notification.confirm("Continue confirming outage?", fakeCallback, "Verify:", "Cancel, Ok")) {
         $("#spinCont").show();
         if ($("#tabs").tabs('option', 'active') == 0) {
             //current device
@@ -585,7 +584,7 @@ function preRestoreOutage(oD) {
 }
 
 function restoreOutage() {
-    if (navigator.notification.confirm("Continue restoring outage?", networkIssue, "Confirm:", "Cancel, Ok")) {
+    if (navigator.notification.confirm("Continue restoring outage?", fakeCallback, "Verify:", "Cancel, Ok")) {
         $("#spinCont").show();
         var cause = $("#select-cause option:selected").val();
         var equip = $("#select-equipment option:selected").val();
@@ -630,6 +629,15 @@ function restoreOutage() {
 
 function quit() {
     $.mobile.pageContainer.pagecontainer("change", "#page1");
+}
+
+function networkIssue(button) {
+    if (button == 2) {
+        window.location.reload();
+    }
+    else if (button == 1) {
+        $.mobile.pageContainer.pagecontainer("change", "#pageLogin");
+    }
 }
 
 function fakeCallback() { }
