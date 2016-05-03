@@ -509,9 +509,9 @@ function preConfirmOutage(oD) {
 
 function confirmOutage() {
     if (confirm("Continue confirming outage?")) {
+        $("#spinCont").show();
         if ($("#tabs").tabs('option', 'active') == 0) {
             //current device
-
         }
         else if ($("#tabs").tabs('option', 'active') == 1) {
             //upstream device
@@ -527,7 +527,7 @@ function confirmOutage() {
             contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {
-
+                $("#spinCont").hide();
                 outageEventID = "";
                 outagePhase = "";
                 outageDevice = "";
@@ -588,8 +588,8 @@ function preRestoreOutage(oD) {
 }
 
 function restoreOutage() {
-
     if (confirm("Continue Restoring outage?")) {
+        $("#spinCont").show();
         var cause = $("#select-cause option:selected").val();
         var equip = $("#select-equipment option:selected").val();
         var weather = $("#select-weather option:selected").val();
@@ -604,7 +604,7 @@ function restoreOutage() {
                 contentType: "application/json; charset=utf-8",
                 cache: false,
                 success: function (results) {
-
+                    $("#spinCont").hide();
                     outageEventID = "";
                     outagePhase = "";
                     outageDevice = "";
