@@ -33,3 +33,11 @@ a[x-apple-data-detectors] {
   font-weight: inherit !important;
   line-height: inherit !important;
 }
+
+h3{
+    color: black;
+}
+
+li{
+    background-color:gainsboro;
+}
