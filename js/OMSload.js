@@ -241,7 +241,7 @@ function getOutageCodes() {
             var _cause = res[0].items.sort(function (a, b) { return a.value - b.value });
 
             //update Cause codes
-            $('#select-cause').remove();
+            $('#select-cause option').remove();
             for (a = 0; a < _cause.length; a++) {
                 $('#select-cause').append($('<option/>', {
                     value: _cause[a].value,
@@ -251,7 +251,7 @@ function getOutageCodes() {
 
             var _equip = res[1].items.sort(function (a, b) { return a.value - b.value });
             //update Equipment codes
-            $('#select-equipment').remove();
+            $('#select-equipment option').remove();
             $('#select-equipment').append($('<option/>', { value: -1, text: "" }));
             for (b = 0; b < _equip.length; b++) {
                 $('#select-equipment').append($('<option/>', {
@@ -262,7 +262,7 @@ function getOutageCodes() {
 
             var _weather = res[2].items.sort(function (a, b) { return a.value - b.value });
             //update Weather codes
-            $('#select-weather').remove();
+            $('#select-weather option').remove();
             for (c = 0; c < _weather.length; c++) {
                 $('#select-weather').append($('<option/>', {
                     value: _weather[c].value,
@@ -272,7 +272,7 @@ function getOutageCodes() {
 
             var _other = res[3].items.sort(function (a, b) { return a.value - b.value });
             //update other codes
-            $('#select-other').remove();
+            $('#select-other option').remove();
             for (d = 0; d < _other.length; d++) {
                 $('#select-other').append($('<option/>', {
                     value: _other[d].value,
@@ -465,6 +465,7 @@ function getSpinner() {
 //}
 
 function preConfirmOutage(oD) {
+    $("#spinCont").show();
     outageEventID = "";
     outagePhase = "";
     outageDevice = "";
@@ -498,6 +499,7 @@ function preConfirmOutage(oD) {
             $.mobile.pageContainer.pagecontainer("change", "#page2");
             $("#tabs").tabs("option", "active", 0);
             $('#tab-one').addClass("ui-btn-active");
+            $("#spinCont").hide();
         }
     });
 }
@@ -532,7 +534,7 @@ function sendConfim(button) {
                 outageDevice = "";
 
                 //alert("Outage has been confirmed! Allow a few minutes for OMS to process update.");
-                navigator.notification.alert("Outage has been confirmed! Allow a few minutes for OMS to process update.", fakeCallback, "Error:", "Ok");
+                navigator.notification.alert("Outage has been confirmed! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -559,6 +561,7 @@ function sendConfim(button) {
 }
 
 function preRestoreOutage(oD) {
+    $("#spinCont").show();
     outageEventID = "";
     outagePhase = "";
     outageDevice = "";
@@ -580,11 +583,12 @@ function preRestoreOutage(oD) {
                 $("#restoreLbl").text("");
                 $("#restoreLbl").text(outageDevice);
                 $("#select-cause").val("0").change();
+                $("#select-equipment").val("-1").change();
                 $("#select-weather").val("0").change();
-                $("#select-weather").val("0").change();
-                $("#select-weather").val("0").change();
+                $("#select-other").val("0").change();
             });
             $.mobile.pageContainer.pagecontainer("change", "#page3");
+            $("#spinCont").hide();
         }
     });
 }
@@ -617,7 +621,7 @@ function sendRestore(button) {
                     outageDevice = "";
 
                     //alert("Outage has been restored! Allow a few minutes for OMS to process update.");
-                    navigator.notification.alert("Outage has been restored! Allow a few minutes for OMS to process update.", fakeCallback, "Error:", "Ok");
+                    navigator.notification.alert("Outage has been restored! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
                     $.mobile.pageContainer.pagecontainer("change", "#page1");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
