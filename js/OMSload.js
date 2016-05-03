@@ -79,9 +79,8 @@ $(document).ready(function () {
             tryingToReconnect = false;
         });
     }
-    else {
-        var r = confirm("No network connection detected, check setting and try again!");
-        if (r == true) {
+    else {        
+        if (navigator.notification.confirm("No network connection detected, check settings and try again!", networkIssue, "Please Confirm:", "Cancel, Ok")) {
             window.location.reload();
         }
         else {
@@ -199,14 +198,10 @@ function register() {
         cache: false,
         success: function (results) {
             var r = results;
-            //Everthing is ok, server side code initailized        
-            //var r = results;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var t = textStatus;
             var e = errorThrown;
-            //alert(errorThrown);
-            //var t = textStatus;
         }
     });
 }
@@ -508,7 +503,8 @@ function preConfirmOutage(oD) {
 }
 
 function confirmOutage() {
-    if (confirm("Continue confirming outage?")) {
+
+    if(navigator.notification.confirm("Continue confirming outage?", networkIssue, "Confirm:", "Cancel, Ok")){
         $("#spinCont").show();
         if ($("#tabs").tabs('option', 'active') == 0) {
             //current device
@@ -532,7 +528,8 @@ function confirmOutage() {
                 outagePhase = "";
                 outageDevice = "";
 
-                alert("Outage has been confirmed! Allow a few minutes for OMS to process update.");
+                //alert("Outage has been confirmed! Allow a few minutes for OMS to process update.");
+                navigator.notification.alert("Outage has been confirmed! Allow a few minutes for OMS to process update.", fakeCallback, "Error:", "Ok");
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -541,9 +538,9 @@ function confirmOutage() {
                 outagePhase = "";
                 outageDevice = "";
 
-                alert("There was an error in confirming outage contact dispatch for assitance with outage.");
+                //alert("There was an error in confirming outage contact dispatch for assitance with outage.");
+                navigator.notification.alert("There was an error in confirming outage contact dispatch for assitance with outage.", fakeCallback, "Error:", "Ok");
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
-
             }
         });
 
@@ -588,7 +585,7 @@ function preRestoreOutage(oD) {
 }
 
 function restoreOutage() {
-    if (confirm("Continue Restoring outage?")) {
+    if (navigator.notification.confirm("Continue restoring outage?", networkIssue, "Confirm:", "Cancel, Ok")) {
         $("#spinCont").show();
         var cause = $("#select-cause option:selected").val();
         var equip = $("#select-equipment option:selected").val();
@@ -609,7 +606,8 @@ function restoreOutage() {
                     outagePhase = "";
                     outageDevice = "";
 
-                    alert("Outage has been restored! Allow a few minutes for OMS to process update.");
+                    //alert("Outage has been restored! Allow a few minutes for OMS to process update.");
+                    navigator.notification.alert("Outage has been restored! Allow a few minutes for OMS to process update.", fakeCallback, "Error:", "Ok");
                     $.mobile.pageContainer.pagecontainer("change", "#page1");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -618,7 +616,8 @@ function restoreOutage() {
             });
         }
         else {
-            alert("All selections must be made in order to restore outage!");
+            //alert("All selections must be made in order to restore outage!");
+            navigator.notification.alert("All selections must be made in order to restore outage!", fakeCallback, "Error:", "Ok");
         }
     }
     else {
