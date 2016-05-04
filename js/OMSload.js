@@ -657,6 +657,11 @@ function prepNote(notedevice) {
                         
             $("#spinCont").hide();
             $("#popup").popup("open");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {         
+            $("#spinCont").hide();
+            clearOutageRecords();
+            navigator.notification.alert("Error opening note form.", fakeCallback, "Error!", "Ok");
         }
     });
 }
