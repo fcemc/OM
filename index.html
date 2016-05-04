@@ -60,11 +60,15 @@
         </div>
 
 
-        <!--<a href="#popupBasic" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-transition="pop">Basic Popup</a>-->
-        <div data-role="popup" id="popup" class="ui-content">
-            Notes for <label id="noteLbl"></label>
-            <input type="text" />
-            <input type="button" onclick="prepNote()" value="Add note to outage" />
+
+        <div style="text-align:center; background-color: gainsboro;" data-role="popup" id="popup" class="ui-content" data-dismissible="false">
+            <label id="noteLbl">Enter the notes for the outage</label>                        
+            <div>
+                <textarea name="textArea" id="noteNotes" cols="50" rows="3" maxlength="100"></textarea>
+            </div>
+            <label style="font-size:small;" id="lettersLeft"></label>
+            <a href="#" style="background-color:red;" onclick="closeNote();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-c" data-rel="back">Cancel</a>
+            <a href="#" onclick="addNote();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Submit</a>
         </div>
 
 
@@ -101,8 +105,8 @@
                 </div>
             </div>
 
-            <button style="background-color:black;" onclick="quit();" class="ui-btn ui-corner-all">Cancel</button>
-            <button style="background-color:red;" onclick="confirmOutage();" class="ui-btn ui-corner-all">Confirm Outage</button>
+            <button style="background-color:red;" onclick="quit();" class="ui-btn ui-corner-all">Cancel</button>
+            <button style="background-color:black;" onclick="confirmOutage();" class="ui-btn ui-corner-all">Confirm Outage</button>
         </div>
     </div>
 
@@ -144,8 +148,8 @@
                     <select name="select-other" id="select-other"></select>
                 </div>
             </div>
-            <button style="background-color:black;" onclick="quit();" class="ui-btn ui-corner-all">Cancel</button>
-            <button style="background-color:red;" onclick="restoreOutage();" class="ui-btn ui-corner-all">Close Outage</button>
+            <button style="background-color:red;" onclick="quit();" class="ui-btn ui-corner-all">Cancel</button>
+            <button style="background-color:black;" onclick="restoreOutage();" class="ui-btn ui-corner-all">Close Outage</button>
         </div>
     </div>
 
