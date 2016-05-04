@@ -94,7 +94,7 @@ $(document).ready(function () {
         corners: false
     });
     $("#noteNotes").keyup(function () {
-        $("#lettersLeft").text(this.innerHTML.length + "/" + this.maxLength);
+        $("#lettersLeft").text("Max characters: " + this.maxLength);
     });
 
 
@@ -643,8 +643,7 @@ function sendRestore(button) {
 }
 
 function closeNote() {
-    clearOutageRecords();
-    $("#lettersLeft").text("0/" + $("#noteNotes")[0].maxLength);
+    clearOutageRecords();    
     $("#noteNotes").val("");
 }
 function prepNote(notedevice) {
@@ -658,7 +657,6 @@ function prepNote(notedevice) {
             var res = results.getOutageEventInfoResult;           
             setOUtageRecords(res.outageEventID, res.outageEventPhase, notedevice);
 
-            $("#lettersLeft").text("0/" + $("#noteNotes")[0].maxLength);
             $("#spinCont").hide();
             $("#popup").popup("open");
         }
@@ -668,7 +666,7 @@ function prepNote(notedevice) {
 function addNote() {
     $("#spinCont").show();
     if ($("#noteNotes").val().length > 0) {
-        var dataString = outageEventID + "/" + outageDevice + "/" + $("#noteNotes").val();
+        var dataString = outageEventID + "/" + outageDevice + "/[" + $("#noteNotes").val() + "]";
         $.ajax({
             type: "GET",
             url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
