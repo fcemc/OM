@@ -301,13 +301,13 @@ function getOutageCodes() {
 function getOutages() {
     $.ajax({
         type: "GET",
-        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
+        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
-            //listOutages(results.getOUTAGECASESResult);
-            listOutages(results.getOUTAGECASES_TESTResult);
+            listOutages(results.getOUTAGECASESResult);
+            //listOutages(results.getOUTAGECASES_TESTResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
