@@ -93,11 +93,8 @@ $(document).ready(function () {
         autogrow: false,
         corners: false
     });
-    $("#noteNotes").keyup(function () {
-        $("#lettersLeft").text("Max characters: " + this.maxLength);
-    });
-
-
+    $("#lettersLeft").text("Max characters: " + $("#noteNotes")[0].maxLength);
+    
 });
 
 //region Login&Cookies
