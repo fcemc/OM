@@ -655,6 +655,7 @@ function prepNote(notedevice) {
             var res = results.getOutageEventInfoResult;           
             setOUtageRecords(res.outageEventID, res.outageEventPhase, notedevice);
                         
+            $("#noteNotes").val("");
             $("#spinCont").hide();
             $("#popup").popup("open");
         },
