@@ -662,7 +662,7 @@ function prepNote(notedevice) {
         error: function (jqXHR, textStatus, errorThrown) {         
             $("#spinCont").hide();
             clearOutageRecords();
-            navigator.notification.alert("Error opening note form.", fakeCallback, "Error!", "Ok");
+            navigator.notification.alert("Error opening form.", fakeCallback, "Error!", "Ok");
         }
     });
 }
@@ -680,7 +680,7 @@ function addNote() {
                 $("#spinCont").hide();
                 clearOutageRecords();
 
-                navigator.notification.alert("Notes have been added to outage.", fakeCallback, "Success!", "Ok");
+                navigator.notification.alert("Notes have been added.", fakeCallback, "Success!", "Ok");
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -688,7 +688,7 @@ function addNote() {
 
                 $("#spinCont").hide();
                 clearOutageRecords();
-                navigator.notification.alert("Note was not added - please review your entery and make sure no special characters were entered.", fakeCallback, "Error!", "Ok");
+                navigator.notification.alert("Note was not added - review notes and make sure no special characters were used.  Or outage may have been updated, please try again.", fakeCallback, "Error!", "Ok");
             }
         });
     }
