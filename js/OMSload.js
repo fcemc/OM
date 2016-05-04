@@ -679,7 +679,10 @@ function addNote() {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var e = textStatus;
+
+                $("#spinCont").hide();
                 clearOutageRecords();
+                navigator.notification.alert("Note was not added - please review your entery and make sure no special characters were entered.", fakeCallback, "Error!", "Ok");
             }
         });
     }
