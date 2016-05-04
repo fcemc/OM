@@ -79,7 +79,7 @@ $(document).ready(function () {
             tryingToReconnect = false;
         });
     }
-    else {        
+    else {
         if (navigator.notification.confirm("No network connection detected, check settings and try again!", networkIssue, "Please Confirm:", "Cancel, Ok")) {
             window.location.reload();
         }
@@ -87,6 +87,17 @@ $(document).ready(function () {
             $.mobile.pageContainer.pagecontainer("change", "#pageLogin");
         }
     }
+
+
+    $("#noteNotes").textinput({
+        autogrow: false,
+        corners: false
+    });
+    $("#noteNotes").keyup(function () {
+        $("#lettersLeft").text(this.innerHTML.length + "/" + this.maxLength);
+    });
+
+
 });
 
 //region Login&Cookies
@@ -327,8 +338,7 @@ function listOutages(data) {
     if (data.length > 0) {
         var _string = "<div data-role='collapsible-set'>";
         for (i = 0; i < data.length; i++) {
-            //_string += "<div data-role='collapsible'><h3>" + data[i].CASENUM + "</h3><a onclick='prepNote(\'" + data[i].ELEMENTID.toString() + "\');' style='background-color:gainsboro;' href='#' class='ui-btn ui-corner-all'>Add note to outage</a>";
-            _string += '<div data-role="collapsible"><h3>' + data[i].CASENUM + '</h3><a onclick="prepNote(\'' + data[i].ELEMENTID.toString() + '\');" style="background-color:gainsboro;" href="#" class="ui-btn ui-corner-all">Add note to outage</a>';
+            _string += '<div data-role="collapsible"><h3>' + data[i].CASENUM + '</h3><a onclick="prepNote(\'' + data[i].ELEMENTID.toString() + '\');" href="#" class="ui-btn ui-corner-all notes">Add note to outage</a>';
             _string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
             _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
             _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
@@ -467,9 +477,7 @@ function getSpinner() {
 
 function preConfirmOutage(oD) {
     $("#spinCont").show();
-    outageEventID = "";
-    outagePhase = "";
-    outageDevice = "";
+    clearOutageRecords();
 
     $.ajax({
         type: "GET",
@@ -478,10 +486,9 @@ function preConfirmOutage(oD) {
         cache: false,
         success: function (results) {
             var res = results.getOutageEventInfoResult;
-            outageEventID = res.outageEventID;
-            outagePhase = res.outageEventPhase;
-            outageDevice = oD;
-
+            
+            setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
+                        
             var upstreamIDs = res.upstreamIDs;
             $("#select-upstream option").remove();
             for (i = 1; i < upstreamIDs.length; i++) {
@@ -511,7 +518,7 @@ function confirmOutage() {
 }
 
 function sendConfim(button) {
-    if (button == 2) {        
+    if (button == 2) {
         if ($("#tabs").tabs('option', 'active') == 0) {
             //current device
         }
@@ -530,9 +537,7 @@ function sendConfim(button) {
             cache: false,
             success: function (results) {
                 $("#spinCont").hide();
-                outageEventID = "";
-                outagePhase = "";
-                outageDevice = "";
+                clearOutageRecords();
 
                 //alert("Outage has been confirmed! Allow a few minutes for OMS to process update.");
                 navigator.notification.alert("Outage has been confirmed! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
@@ -541,9 +546,7 @@ function sendConfim(button) {
             error: function (jqXHR, textStatus, errorThrown) {
                 $("#spinCont").hide();
                 var e = textStatus;
-                outageEventID = "";
-                outagePhase = "";
-                outageDevice = "";
+                clearOutageRecords();
 
                 //alert("There was an error in confirming outage contact dispatch for assitance with outage.");
                 navigator.notification.alert("There was an error in confirming outage contact dispatch for assitance with outage.", fakeCallback, "Error:", "Ok");
@@ -553,9 +556,7 @@ function sendConfim(button) {
     }
     else if (button == 1) {
         $("#spinCont").hide();
-        outageEventID = "";
-        outagePhase = "";
-        outageDevice = "";
+        clearOutageRecords();
         $("#confrimLbl").text("");
         $.mobile.pageContainer.pagecontainer("change", "#page1");
     }
@@ -563,9 +564,7 @@ function sendConfim(button) {
 
 function preRestoreOutage(oD) {
     $("#spinCont").show();
-    outageEventID = "";
-    outagePhase = "";
-    outageDevice = "";
+    clearOutageRecords();
 
     $.ajax({
         type: "GET",
@@ -574,9 +573,8 @@ function preRestoreOutage(oD) {
         cache: false,
         success: function (results) {
             var res = results.getOutageEventInfoResult;
-            outageEventID = res.outageEventID;
-            outagePhase = res.outageEventPhase;
-            outageDevice = oD;
+            
+            setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
 
             $("#restoreLbl").text(oD);
 
@@ -617,9 +615,7 @@ function sendRestore(button) {
                 cache: false,
                 success: function (results) {
                     $("#spinCont").hide();
-                    outageEventID = "";
-                    outagePhase = "";
-                    outageDevice = "";
+                    clearOutageRecords();
 
                     //alert("Outage has been restored! Allow a few minutes for OMS to process update.");
                     navigator.notification.alert("Outage has been restored! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
@@ -646,6 +642,11 @@ function sendRestore(button) {
     }
 }
 
+function closeNote() {
+    clearOutageRecords();
+    $("#lettersLeft").text("0/" + $("#noteNotes")[0].maxLength);
+    $("#noteNotes").val("");
+}
 function prepNote(notedevice) {
     $.ajax({
         type: "GET",
@@ -653,38 +654,48 @@ function prepNote(notedevice) {
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
-            //var res = results.getOutageEventInfoResult;
-            //addNote(nod, res.outageEventID);
+            var res = results.getOutageEventInfoResult;           
+            setOUtageRecords(res.outageEventID, res.outageEventPhase, notedevice);
 
+            $("#lettersLeft").text("0/" + $("#noteNotes")[0].maxLength);
             $("#popup").popup("open");
         }
     });
 }
 
-function addNote(outageEventID, deviceID, comments){
-    //addOutageRemarks(string outageEventID, string deviceID, string comments)
-    var dataString = outageEventID + "/" + outageDevice + "/" + comments;
+function addNote() {
+    if ($("#noteNotes").val().length > 0) {
+        var dataString = outageEventID + "/" + outageDevice + "/" + $("#noteNotes").val();
+        $.ajax({
+            type: "GET",
+            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            success: function (results) {
+                $("#spinCont").hide();
+                clearOutageRecords();
 
-    $.ajax({
-        type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
-        contentType: "application/json; charset=utf-8",
-        cache: false,
-        success: function (results) {
-            $("#spinCont").hide();
-            outageEventID = "";
-            outagePhase = "";
-            outageDevice = "";
+                navigator.notification.alert("Notes have been added to outage.", fakeCallback, "Success!", "Ok");
+                $.mobile.pageContainer.pagecontainer("change", "#page1");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var e = textStatus;
+                clearOutageRecords();
+            }
+        });
+    }
+}
 
-            //alert("Outage has been restored! Allow a few minutes for OMS to process update.");
-            navigator.notification.alert("Notes have been added to outage.", fakeCallback, "Success!", "Ok");
-            $.mobile.pageContainer.pagecontainer("change", "#page1");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            var e = textStatus;
-        }
-    });
+function clearOutageRecords() {
+    outageEventID = "";
+    outagePhase = "";
+    outageDevice = "";
+}
 
+function setOUtageRecords(oid, oph, odev) {
+    outageEventID = oid;
+    outagePhase = oph;
+    outageDevice = odev;
 }
 
 function quit() {
