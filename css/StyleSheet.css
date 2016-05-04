@@ -41,3 +41,9 @@ h3{
 li{
     background-color:gainsboro;
 }
+
+.notes{
+    background-color:gainsboro !important;
+    color:black !important;
+}
+
