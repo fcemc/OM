@@ -643,7 +643,8 @@ function sendRestore(button) {
 }
 
 function closeNote() {
-    clearOutageRecords();    
+    clearOutageRecords();
+    $("#lettersLeft").text("0/" + $("#noteNotes")[0].maxLength);
     $("#noteNotes").val("");
 }
 function prepNote(notedevice) {
@@ -656,7 +657,7 @@ function prepNote(notedevice) {
         success: function (results) {
             var res = results.getOutageEventInfoResult;           
             setOUtageRecords(res.outageEventID, res.outageEventPhase, notedevice);
-
+                        
             $("#spinCont").hide();
             $("#popup").popup("open");
         }
