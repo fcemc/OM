@@ -648,6 +648,7 @@ function closeNote() {
     $("#noteNotes").val("");
 }
 function prepNote(notedevice) {
+    $("#spinCont").show();
     $.ajax({
         type: "GET",
         url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + notedevice,
@@ -658,12 +659,14 @@ function prepNote(notedevice) {
             setOUtageRecords(res.outageEventID, res.outageEventPhase, notedevice);
 
             $("#lettersLeft").text("0/" + $("#noteNotes")[0].maxLength);
+            $("#spinCont").hide();
             $("#popup").popup("open");
         }
     });
 }
 
 function addNote() {
+    $("#spinCont").show();
     if ($("#noteNotes").val().length > 0) {
         var dataString = outageEventID + "/" + outageDevice + "/" + $("#noteNotes").val();
         $.ajax({
