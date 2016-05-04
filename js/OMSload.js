@@ -290,13 +290,13 @@ function getOutageCodes() {
 function getOutages() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
-        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
+        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
-            listOutages(results.getOUTAGECASESResult);
-            //listOutages(results.getOUTAGECASES_TESTResult);
+            //listOutages(results.getOUTAGECASESResult);
+            listOutages(results.getOUTAGECASES_TESTResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
@@ -327,7 +327,8 @@ function listOutages(data) {
     if (data.length > 0) {
         var _string = "<div data-role='collapsible-set'>";
         for (i = 0; i < data.length; i++) {
-            _string += "<div data-role='collapsible'><h3>" + data[i].CASENUM + "</h3>";
+            //_string += "<div data-role='collapsible'><h3>" + data[i].CASENUM + "</h3><a onclick='prepNote(\'" + data[i].ELEMENTID.toString() + "\');' style='background-color:gainsboro;' href='#' class='ui-btn ui-corner-all'>Add note to outage</a>";
+            _string += '<div data-role="collapsible"><h3>' + data[i].CASENUM + '</h3><a onclick="prepNote(\'' + data[i].ELEMENTID.toString() + '\');" style="background-color:gainsboro;" href="#" class="ui-btn ui-corner-all">Add note to outage</a>';
             _string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
             _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
             _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
@@ -643,6 +644,47 @@ function sendRestore(button) {
         $("#restoreLbl").text("");
         $.mobile.pageContainer.pagecontainer("change", "#page1");
     }
+}
+
+function prepNote(notedevice) {
+    $.ajax({
+        type: "GET",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + notedevice,
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        success: function (results) {
+            //var res = results.getOutageEventInfoResult;
+            //addNote(nod, res.outageEventID);
+
+            $("#popup").popup("open");
+        }
+    });
+}
+
+function addNote(outageEventID, deviceID, comments){
+    //addOutageRemarks(string outageEventID, string deviceID, string comments)
+    var dataString = outageEventID + "/" + outageDevice + "/" + comments;
+
+    $.ajax({
+        type: "GET",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        success: function (results) {
+            $("#spinCont").hide();
+            outageEventID = "";
+            outagePhase = "";
+            outageDevice = "";
+
+            //alert("Outage has been restored! Allow a few minutes for OMS to process update.");
+            navigator.notification.alert("Notes have been added to outage.", fakeCallback, "Success!", "Ok");
+            $.mobile.pageContainer.pagecontainer("change", "#page1");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            var e = textStatus;
+        }
+    });
+
 }
 
 function quit() {

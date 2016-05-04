@@ -25,6 +25,7 @@ var app = {
 };
 
 function onDeviceReady() {
+    document.addEventListener("resume", onResume, false);
     document.addEventListener("backbutton", function (e) {
         if ($("#home").length > 0) {
             // call this to get a new token each time. don't call it to reuse existing token.
@@ -52,6 +53,11 @@ function onDeviceReady() {
         alert(txt);
     }
 }
+
+function onResume() {
+    getOutages();
+}
+
 
 // handle APNS notifications for iOS
 function onNotificationAPN(e) {
