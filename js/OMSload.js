@@ -124,7 +124,10 @@ function checkLogin() {
 
             }
             else {
-                window.localStorage.clear();
+                //window.localStorage.clear();
+                localStorage.setItem("fcemcOMS_uname", "");
+                localStorage.setItem("fcemcOMS_pass", "");
+
                 $("#loginError").text("Login Unsucessful");
             }
         },
@@ -192,7 +195,9 @@ function checkCookie() {
             $("#pw").val(localStorage.fcemcOMS_pass);
         }
         else {
-            localStorage.clear();
+            //localStorage.clear();
+            localStorage.setItem("fcemcOMS_uname", "");
+            localStorage.setItem("fcemcOMS_pass", "");
         }
     }
 }
