@@ -544,7 +544,7 @@ function sendConfim(button) {
             success: function (results) {
                 $("#spinCont").hide();
                 clearOutageRecords();                
-                navigator.notification.alert("Outage has been confirmed! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
+                navigator.notification.alert("Outage has been confirmed!", fakeCallback, "Success!", "Ok");
                 getOutages();
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             },
@@ -621,7 +621,7 @@ function sendRestore(button) {
                 success: function (results) {
                     $("#spinCont").hide();
                     clearOutageRecords();                    
-                    navigator.notification.alert("Outage has been restored! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
+                    navigator.notification.alert("Outage has been restored!", fakeCallback, "Success!", "Ok");
                     getOutages();
                     $.mobile.pageContainer.pagecontainer("change", "#page1");
                 },
