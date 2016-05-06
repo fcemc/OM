@@ -365,10 +365,10 @@ function listOutages(data) {
         $("#outage").html(_string.toString());
         $('#outage [data-role=collapsible-set]').collapsibleset();
 
-        if (navigator.notification != undefined) {
-            navigator.notification.beep(1);
-            navigator.notification.vibrate(1000);
-        }
+        //if (navigator.notification != undefined) {
+        //    navigator.notification.beep(1);
+        //    navigator.notification.vibrate(1000);
+        //}
     }
     else if (data.length == 0) {
         $("#outage").html("");
