@@ -47,7 +47,7 @@ $(document).ready(function () {
                 //case "AVL":
                 //    AVLResults(data);
                 //    break;
-                case "OUTAGE":
+                case "OMS":
                     listOutages(data);
                     break;
                 case "SCADA":
@@ -303,12 +303,13 @@ function getOutageCodes() {
 function getOutages() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",
+        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
         //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
-            listOutages(results.getOUTAGECASESResult);
+            listOutages(results.GETACTIVEOUTAGESResult);
             //listOutages(results.getOUTAGECASES_TESTResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -334,21 +335,24 @@ function getSCADAOutages() {
 
 function listOutages(data) {
 
-    var canConfirm = ["Calls Bundle", "Predicted", "Predicted: CauseFound"];
-    var canRestore = ["CauseFound", "CauseUnknown", "CauseUnknown", "Misc", "Closed"];
+    //var canConfirm = ["Calls Bundle", "Predicted", "Predicted: CauseFound"];
+    //var canRestore = ["CauseFound", "CauseUnknown", "CauseUnknown", "Misc", "Closed"];
+
+    var canConfirm = ["Assumed"];
+    var canRestore = ["Confirmed"];
 
     if (data.length > 0) {
         var _string = "<div data-role='collapsible-set'>";
         for (i = 0; i < data.length; i++) {
-            _string += '<div data-role="collapsible"><h3>' + data[i].CASENUM + '</h3><a onclick="prepNote(\'' + data[i].ELEMENTID.toString() + '\');" href="#" class="ui-btn ui-corner-all notes">Add note to outage</a>';
-            _string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
+            _string += '<div data-role="collapsible"><h3>' + data[i].ELEMENTID + '</h3><a onclick="prepNote(\'' + data[i].ELEMENTID.toString() + '\');" href="#" class="ui-btn ui-corner-all notes">Add note to outage</a>';
+            //_string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
             _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
             _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
             _string += "<div class='accdEntry'><b>Start Date:</b> " + data[i].DATESTRT + "</div>";
             _string += "<div class='accdEntry'><b>Element:</b> " + data[i].ELEMENT + "</div>";
             _string += "<div class='accdEntry'><b>Element ID:</b> " + data[i].ELEMENTID + "</div>";
             _string += "<div class='accdEntry'><b>Pole Number:</b> " + data[i].POLENUM + "</div>";
-            _string += "<div class='accdEntry'><b>Case Status:</b> " + data[i].CASESTATUS + "</div>";
+            //_string += "<div class='accdEntry'><b>Case Status:</b> " + data[i].CASESTATUS + "</div>";
 
             if (jQuery.inArray(data[i].CASESTATUS, canRestore) > -1) {
                 _string += '<div><button style="background-color:red;" onclick="preRestoreOutage(\'' + data[i].ELEMENTID.toString() + '\');" class="ui-btn ui-corner-all">Close Outage</button></div>';
@@ -539,10 +543,9 @@ function sendConfim(button) {
             cache: false,
             success: function (results) {
                 $("#spinCont").hide();
-                clearOutageRecords();
-
-                //alert("Outage has been confirmed! Allow a few minutes for OMS to process update.");
+                clearOutageRecords();                
                 navigator.notification.alert("Outage has been confirmed! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
+                getOutages();
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -617,10 +620,9 @@ function sendRestore(button) {
                 cache: false,
                 success: function (results) {
                     $("#spinCont").hide();
-                    clearOutageRecords();
-
-                    //alert("Outage has been restored! Allow a few minutes for OMS to process update.");
+                    clearOutageRecords();                    
                     navigator.notification.alert("Outage has been restored! Allow a few minutes for OMS to process update.", fakeCallback, "Success!", "Ok");
+                    getOutages();
                     $.mobile.pageContainer.pagecontainer("change", "#page1");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
