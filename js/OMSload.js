@@ -115,7 +115,7 @@ function checkLogin() {
 
                 $("#spinCont").show();
 
-                if (localStorage.fcemcOMS_uname == undefined) {
+                if (localStorage.fcemcOMS_uname == undefined || localStorage.fcemcOMS_uname == "") {
                     setCookie(user, _pw, 1); //expires 1 day from inital login
                 }
 
@@ -651,6 +651,7 @@ function closeNote() {
     $("#lettersLeft").text("0/" + $("#noteNotes")[0].maxLength);
     $("#noteNotes").val("");
 }
+
 function prepNote(notedevice) {
     $("#spinCont").show();
     $.ajax({
