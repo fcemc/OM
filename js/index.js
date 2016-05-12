@@ -119,10 +119,12 @@ function onNotification(e) {
                     var e = e.coldstart;
             }
 
-            $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
-            //android only
-            $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
-            //amazon-fireos only
+            pushNotification.setApplicationIconBadgeNumber(successHandler, e.payload.msgcnt);
+
+            //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+            ////android only
+            //$("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
+            ////amazon-fireos only
             //$("#app-status-ul").append('<li>MESSAGE -> TIMESTAMP: ' + e.payload.timeStamp + '</li>');
             break;
 
