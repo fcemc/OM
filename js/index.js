@@ -41,7 +41,7 @@ function onDeviceReady() {
     try {     
         pushNotification = window.plugins.pushNotification;        
         if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
-            pushNotification.register(successHandler, errorHandler, { "senderID": "18994795059", "ecb": "onNotification" });		// required!            
+            pushNotification.register(successHandler, errorHandler, { "badge": "true", "sound": "true", "alert": "true", "senderID": "18994795059", "ecb": "onNotification" });		// required!            
         } else {
             pushNotification.register(tokenHandler, errorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });	// required!
         }
@@ -119,13 +119,16 @@ function onNotification(e) {
                     var e = e.coldstart;
             }
 
+            pushNotification.setApplicationIconBadgeNumber(successHandler, e.payload.msgcnt);  //doesn't work
+            
 
+            
 
-            $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
-            //Only works for GCM
-            $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
-            //Only works on Amazon Fire OS
-            $status.append('<li>MESSAGE -> TIME: ' + e.payload.timeStamp + '</li>');
+            //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+            ////android only
+            //$("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
+            ////amazon-fireos only
+            //$("#app-status-ul").append('<li>MESSAGE -> TIMESTAMP: ' + e.payload.timeStamp + '</li>');
             break;
 
         case 'error':
