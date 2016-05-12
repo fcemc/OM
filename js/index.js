@@ -120,7 +120,7 @@ function onNotification(e) {
             }
 
             //pushNotification.setApplicationIconBadgeNumber(successHandler, e.payload.msgcnt);  //doesn't work
-            cordova.plugins.notification.badge.set(e.payload.msgcnt);
+            cordova.plugins.notification.badge.set(10);
 
             //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
             ////android only
