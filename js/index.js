@@ -119,14 +119,13 @@ function onNotification(e) {
                     var e = e.coldstart;
             }
 
-            //pushNotification.setApplicationIconBadgeNumber(successHandler, e.payload.msgcnt);  //doesn't work
-            cordova.plugins.notification.badge.set(10);
 
-            //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
-            ////android only
-            //$("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
-            ////amazon-fireos only
-            //$("#app-status-ul").append('<li>MESSAGE -> TIMESTAMP: ' + e.payload.timeStamp + '</li>');
+
+            $("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
+            //Only works for GCM
+            $("#app-status-ul").append('<li>MESSAGE -> MSGCNT: ' + e.payload.msgcnt + '</li>');
+            //Only works on Amazon Fire OS
+            $status.append('<li>MESSAGE -> TIME: ' + e.payload.timeStamp + '</li>');
             break;
 
         case 'error':
