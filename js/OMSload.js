@@ -1,4 +1,4 @@
-﻿var tryingToReconnect = false, user, badgeCount = 0, outageEventID, outagePhase, outageDevice;
+﻿var tryingToReconnect = false, user, badgeCount = 0, outageEventID, outagePhase, outageDevice,outageBeingRestored = false;
 
 $(document).ready(function () {
     //adjust for status bar in iOS
@@ -48,7 +48,9 @@ $(document).ready(function () {
                 //    AVLResults(data);
                 //    break;
                 case "OMS":
-                    listOutages(data);
+                    if (outageBeingRestored === false) {
+                        listOutages(data);
+                    }
                     break;
                 case "SCADA":
                     listSCADAOutages(data);
@@ -607,7 +609,7 @@ function restoreOutage() {
 
 function sendRestore(button) {
     if (button == 2) {
-        $("#spinCont").show();
+        //$("#spinCont").show();
         var cause = $("#select-cause option:selected").val();
         var equip = $("#select-equipment option:selected").val();
         var weather = $("#select-weather option:selected").val();
@@ -615,7 +617,7 @@ function sendRestore(button) {
 
         if (cause > 0 && equip > -1 && weather > 0 && other > 0) {
             var dataString = outageEventID + "/" + outageDevice + "/" + cause + "/" + equip + "/" + weather + "/" + other + "/" + localStorage.fcemcOMS_uname;
-
+            outageBeingRestored = true;
             $.ajax({
                 type: "GET",
                 url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/restoreOutage/" + dataString,
@@ -628,6 +630,7 @@ function sendRestore(button) {
                 complete: function ( jqXHR, textStatus) {                    
                     $("#spinCont").hide();
                     $.mobile.pageContainer.pagecontainer("change", "#page1");
+                    outageBeingRestored = false;
                     getOutages();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
