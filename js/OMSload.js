@@ -513,6 +513,9 @@ function preConfirmOutage(oD) {
             $.mobile.pageContainer.pagecontainer("change", "#page2");
             $("#tabs").tabs("option", "active", 0);
             $('#tab-one').addClass("ui-btn-active");
+            
+        },
+        complete: function (jqXHR, textStatus) {
             $("#spinCont").hide();
         }
     });
@@ -525,10 +528,7 @@ function confirmOutage() {
 
 function sendConfim(button) {
     if (button == 2) {
-        if ($("#tabs").tabs('option', 'active') == 0) {
-            //current device
-        }
-        else if ($("#tabs").tabs('option', 'active') == 1) {
+        if ($("#tabs").tabs('option', 'active') == 1) {
             //upstream device
             outagePhase = $("#select-phase").val();
             outageDevice = $("#select-upstream").val();
@@ -541,12 +541,15 @@ function sendConfim(button) {
             url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/confirmOutage/" + dataString,
             contentType: "application/json; charset=utf-8",
             cache: false,
-            success: function (results) {
-                $("#spinCont").hide();
+            success: function (results) {            
                 clearOutageRecords();                
-                navigator.notification.alert("Outage has been confirmed!", fakeCallback, "Success!", "Ok");
+                navigator.notification.alert("Outage has been confirmed!", fakeCallback, "Success!", "Ok");                
+            },
+            complete: function (jqXHR, textStatus) {
+                $("#spinCont").hide();
+                $.mobile.pageContainer.pagecontainer("change", "#page1");                
                 getOutages();
-                $.mobile.pageContainer.pagecontainer("change", "#page1");
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $("#spinCont").hide();
@@ -618,12 +621,14 @@ function sendRestore(button) {
                 url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/restoreOutage/" + dataString,
                 contentType: "application/json; charset=utf-8",
                 cache: false,
-                success: function (results) {
-                    $("#spinCont").hide();
-                    clearOutageRecords();                    
+                success: function (results) {                    
+                    clearOutageRecords();
                     navigator.notification.alert("Outage has been restored!", fakeCallback, "Success!", "Ok");
-                    getOutages();
+                },
+                complete: function ( jqXHR, textStatus) {                    
+                    $("#spinCont").hide();
                     $.mobile.pageContainer.pagecontainer("change", "#page1");
+                    getOutages();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     var e = textStatus;
