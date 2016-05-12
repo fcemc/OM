@@ -72,7 +72,7 @@ function onNotificationAPN(e) {
     }
 
     if (e.badge) {
-        pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);
+        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
     }
 }
 
@@ -119,7 +119,7 @@ function onNotification(e) {
                     var e = e.coldstart;
             }
 
-            pushNotification.setApplicationIconBadgeNumber(successHandler, e.payload.msgcnt);  //doesn't work
+            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.payload.msgcnt);  //doesn't work
             
 
             
