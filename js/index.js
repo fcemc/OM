@@ -68,7 +68,7 @@ function onNotificationAPN(e) {
     if (e.sound) {
         // playing a sound also requires the org.apache.cordova.media plugin
         //var snd = new Media(e.sound);
-        var snd = new Media("Swing02.WAV");
+        var snd = new Media("FCEMCsound.WAV");
         snd.play();
     }
 
@@ -110,7 +110,7 @@ function onNotification(e) {
                 // if the notification contains a soundname, play it.
                 // playing a sound also requires the org.apache.cordova.media plugin
                 //var my_media = new Media("/android_asset/www/" + soundfile);
-                var my_media = new Media("/android_asset/www/Swing02.WAV");
+                var my_media = new Media("/android_asset/www/FCEMCsound.WAV");
                 my_media.play();
             }
             else {	// otherwise we were launched because the user touched a notification in the notification tray.
