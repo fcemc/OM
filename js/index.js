@@ -72,9 +72,7 @@ function onNotificationAPN(e) {
     }
 
     if (e.badge) {
-        //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
-        pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);
-
+        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
     }
 }
 
@@ -121,9 +119,7 @@ function onNotification(e) {
                     var e = e.coldstart;
             }
 
-            //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.payload.msgcnt);  //doesn't work
-
-            //cordova.plugins.notification.badge.set(e.payload.msgcnt);
+            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.payload.msgcnt);  //doesn't work
 
 
             //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
