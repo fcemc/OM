@@ -71,9 +71,9 @@
   <gap:plugin name="org.apache.cordova.console" />-->
   <!--<gap:plugin name="org.apache.cordova.contacts" />-->
   <plugin name="org.apache.cordova.device" />
-  <plugin name="org.apache.cordova.device-motion" />
+  <!--<plugin name="org.apache.cordova.device-motion" />
   <plugin name="org.apache.cordova.device-orientation" />
-  <plugin name="org.apache.cordova.dialogs" />
+  <plugin name="org.apache.cordova.dialogs" />-->
   <!--<gap:plugin name="org.apache.cordova.file" />
   <gap:plugin name="org.apache.cordova.file-transfer" /-->>
   <plugin name="org.apache.cordova.geolocation" />
@@ -83,10 +83,9 @@
   <!--<gap:plugin name="org.apache.cordova.network-information" />-->  
   <plugin name="org.apache.cordova.splashscreen" />
   <plugin name="org.apache.cordova.vibration" />
-  <plugin name="org.apache.cordova.statusbar" />  
-  <!--<plugin name="com.phonegap.plugins.pushplugin" />-->    
+  <plugin name="org.apache.cordova.statusbar" />    
   <plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" />
-  <plugin name="de.appplant.cordova.plugin.badge" />
+  <gap:plugin name="de.appplant.cordova.plugin.badge" version="0.7.2" source="npm" />
   
   <!-- Third party plugins -->
   <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
