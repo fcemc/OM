@@ -119,9 +119,9 @@ function onNotification(e) {
                     var e = e.coldstart;
             }
 
-            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.payload.msgcnt);  //doesn't work
+            //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.payload.msgcnt);  //doesn't work
             
-
+            cordova.plugins.notification.badge.set(e.payload.msgcnt);
             
 
             //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
