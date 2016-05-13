@@ -60,20 +60,26 @@ function onResume() {
 
 // handle APNS notifications for iOS
 function onNotificationAPN(e) {
-    if (e.alert) {        
-        // showing an alert also requires the org.apache.cordova.dialogs plugin
-        navigator.notification.alert(e.alert, fakeCallback, "APN Error", "onNotificationAPN");
-    }
+    try{
+        if (e.alert) {        
+            // showing an alert also requires the org.apache.cordova.dialogs plugin
+            navigator.notification.alert(e.alert, fakeCallback, "APN Error", "onNotificationAPN");
+        }
 
-    if (e.sound) {
-        // playing a sound also requires the org.apache.cordova.media plugin
-        var snd = new Media(e.sound);
-        snd.play();
-    }
+        if (e.sound) {
+            // playing a sound also requires the org.apache.cordova.media plugin
+            var snd = new Media(e.sound);
+            snd.play();
+        }
 
-    if (e.badge) {
-        //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
-        pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);
+        if (e.badge) {
+            //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
+            pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);
+        }
+    }
+    catch(ex)
+    {
+        var _ex = ex.message.toString();
     }
 }
 
