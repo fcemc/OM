@@ -41,7 +41,7 @@ function onDeviceReady() {
     try {     
         pushNotification = window.plugins.pushNotification;        
         if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
-            pushNotification.register(successHandler, errorHandler, { "badge": "true", "sound": "true", "alert": "true", "senderID": "18994795059", "ecb": "onNotification" });		// required!            
+            pushNotification.register(successHandler, errorHandler, { "senderID": "18994795059", "ecb": "onNotification" });		// required!            
         } else {
             pushNotification.register(tokenHandler, errorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });	// required!
         }
@@ -73,8 +73,7 @@ function onNotificationAPN(e) {
         }
 
         if (e.badge) {
-            //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
-            pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);
+            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
         }
     }
     catch(ex)
