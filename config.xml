@@ -84,16 +84,11 @@
   <plugin name="org.apache.cordova.splashscreen" />
   <plugin name="org.apache.cordova.vibration" />
   <plugin name="org.apache.cordova.statusbar" />  
+  <plugin name="com.phonegap.plugins.pushplugin" />
   
-  
-  <!--<plugin name="com.phonegap.plugins.pushplugin" />-->  
-  <!--<gap:plugin name="de.appplant.cordova.plugin.badge" />-->
+  <!--<gap:plugin name="de.appplant.cordova.plugin.badge" />-->       <!--NO-->
 
-  <gap:plugin name="com.phonegap.plugins.pushplugin" />
-  <gap:plugin name="de.appplant.cordova.plugin.badge" />
-
-  <!--<plugin name="de.appplant.cordova.plugin.badge" spec="0.6.4" source="pgb" />
-  <plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" />-->
+  <!--<plugin name="de.appplant.cordova.plugin.badge" spec="0.6.4" source="pgb" />-->
   
   
   
