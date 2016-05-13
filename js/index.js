@@ -4,13 +4,13 @@ var pushNotification;
 
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', onDeviceReady, true);
     },
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         app.receivedEvent('deviceready');
     },
     receivedEvent: function (id) {
@@ -38,8 +38,8 @@ function onDeviceReady() {
         }
     }, false);
 
-    try {     
-        pushNotification = window.plugins.pushNotification;        
+    try {
+        pushNotification = window.plugins.pushNotification;
         if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
             pushNotification.register(successHandler, errorHandler, { "senderID": "18994795059", "ecb": "onNotification" });		// required!            
         } else {
@@ -60,29 +60,23 @@ function onResume() {
 
 // handle APNS notifications for iOS
 function onNotificationAPN(e) {
-    try{
-        if (e.alert) {        
-            // showing an alert also requires the org.apache.cordova.dialogs plugin
-            navigator.notification.alert(e.alert, fakeCallback, "APN Error", "onNotificationAPN");
-        }
-
-        if (e.sound) {
-            // playing a sound also requires the org.apache.cordova.media plugin
-            var snd = new Media(e.sound);
-            snd.play();
-        }
-
-        if (e.badge) {
-            pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
-        }
+    if (e.alert) {
+        // showing an alert also requires the org.apache.cordova.dialogs plugin
+        navigator.notification.alert(e.alert, fakeCallback, "APN Error", "onNotificationAPN");
     }
-    catch(ex)
-    {
-        var _ex = ex.message.toString();
+
+    if (e.sound) {
+        // playing a sound also requires the org.apache.cordova.media plugin
+        var snd = new Media(e.sound);
+        snd.play();
+    }
+
+    if (e.badge) {
+        pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.badge);
     }
 }
 
-function tokenHandler(result) {    
+function tokenHandler(result) {
     // Your iOS push server needs to know the token before it can push to this device
     // here is where you might want to send it the token for later use.    
     localStorage.setItem("fcemcOMS_clientType", "iOS");
@@ -96,7 +90,7 @@ function tokenHandler(result) {
 function onNotification(e) {
     switch (e.event) {
         case 'registered':
-            if (e.regid.length > 0) {                
+            if (e.regid.length > 0) {
                 // Your GCM push server needs to know the regID before it can push to this device
                 // here is where you might want to send it the regID for later use.
                 localStorage.setItem("fcemcOMS_clientType", "Android");
@@ -126,9 +120,9 @@ function onNotification(e) {
             }
 
             //pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, e.payload.msgcnt);  //doesn't work
-            
+
             //cordova.plugins.notification.badge.set(e.payload.msgcnt);
-            
+
 
             //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
             ////android only
@@ -147,7 +141,7 @@ function onNotification(e) {
     }
 }
 
-function successHandler(result) {    
+function successHandler(result) {
     var r = result;
 }
 
