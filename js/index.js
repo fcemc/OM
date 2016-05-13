@@ -67,7 +67,8 @@ function onNotificationAPN(e) {
 
     if (e.sound) {
         // playing a sound also requires the org.apache.cordova.media plugin
-        var snd = new Media(e.sound);
+        //var snd = new Media(e.sound);
+        var snd = new Media("Swing02.WAV");
         snd.play();
     }
 
@@ -108,7 +109,8 @@ function onNotification(e) {
                 var soundfile = e.soundname || e.payload.sound;
                 // if the notification contains a soundname, play it.
                 // playing a sound also requires the org.apache.cordova.media plugin
-                var my_media = new Media("/android_asset/www/" + soundfile);
+                //var my_media = new Media("/android_asset/www/" + soundfile);
+                var my_media = new Media("/android_asset/www/Swing02.WAV");
                 my_media.play();
             }
             else {	// otherwise we were launched because the user touched a notification in the notification tray.
@@ -119,7 +121,7 @@ function onNotification(e) {
                     var e = e.coldstart;
             }
 
-            cordova.plugins.notification.badge.set(e.payload.msgcnt);
+            //cordova.plugins.notification.badge.set(e.payload.msgcnt);
 
             //$("#app-status-ul").append('<li>MESSAGE -> MSG: ' + e.payload.message + '</li>');
             ////android only
