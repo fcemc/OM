@@ -54,7 +54,12 @@ function onDeviceReady() {
 }
 
 function onResume() {
-    getOutages();
+    if (new Date(localStorage.fcemcOMS_timeout) > new Date()) {
+        getOutages();
+    }
+    else {
+        location.reload();
+    }
 }
 
 
