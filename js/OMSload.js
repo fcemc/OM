@@ -151,7 +151,7 @@ function setCookie(u, p, t) {
     localStorage.setItem("fcemcOMS_pass", p);
     var d = new Date();
     d.setDate(d.getDate() + t);
-    d.setHours(8);
+    d.setHours(6);
     d.setMinutes(00);
     d.setSeconds(00);
     localStorage.setItem("fcemcOMS_timeout", d);
