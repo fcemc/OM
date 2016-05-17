@@ -195,6 +195,7 @@ function checkCookie() {
         if (new Date(localStorage.fcemcOMS_timeout) > new Date()) {
             $("#un").val(localStorage.fcemcOMS_uname);
             $("#pw").val(localStorage.fcemcOMS_pass);
+            getOutages();
         }
         else {
             //localStorage.clear();
@@ -203,7 +204,7 @@ function checkCookie() {
         }
     }
 }
-//endregion
+//endregionphon
 
 function register() {
     $.ajax({
