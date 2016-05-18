@@ -64,10 +64,10 @@ function onDeviceReady() {
     });
 
     push.on('registration', function (data) {
-        data.registrationId
+        
 
         localStorage.setItem("fcemcOMS_clientType", "iOS");
-        localStorage.setItem("fcemcOMS_did", result);
+        localStorage.setItem("fcemcOMS_did", data.registrationId);
         localStorage.setItem("fcemcOMS_uuid", device.uuid);
 
     });
