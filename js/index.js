@@ -114,7 +114,7 @@ function onNotification(e) {
                 // if the notification contains a soundname, play it.
                 // playing a sound also requires the org.apache.cordova.media plugin
                 //var my_media = new Media("/android_asset/www/" + soundfile);                
-                var my_media = new Media("/android_asset/www/sound/" + soundfile);
+                var my_media = new Media("/android_asset/www/" + soundfile);
                 my_media.play();
             }
             else {	// otherwise we were launched because the user touched a notification in the notification tray.
