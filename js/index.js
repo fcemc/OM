@@ -56,9 +56,7 @@ function onDeviceReady() {
 
     var push = PushNotification.init({
         android: {
-            senderID: "18994795059",
-            sound: true,
-            vibrate: true
+            senderID: "18994795059"
         },
         ios: {
             alert: "true",
@@ -87,7 +85,13 @@ function onResume() {
 function registerDevice(data) {
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
         localStorage.setItem("fcemcOMS_clientType", "Android");
-        localStorage.setItem("fcemcOMS_did", data.registrationId);
+
+        if (data.registrationId.indexOf(':') > -1) {
+            localStorage.setItem("fcemcOMS_did", data.registrationId.split(':')[1]);
+        }
+        else {
+            localStorage.setItem("fcemcOMS_did", data.registrationId);
+        }
         localStorage.setItem("fcemcOMS_uuid", device.uuid);
     } else {
         localStorage.setItem("fcemcOMS_clientType", "iOS");
@@ -100,8 +104,9 @@ function notifyDevice(data){
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
         data.message,
         data.title,
-        data.count
-        
+        data.count,
+        data.sound
+
         var my_media = new Media("/android_asset/www/" + data.sound);
         my_media.play();
 
@@ -110,9 +115,10 @@ function notifyDevice(data){
     } else {
         data.message,
         data.title,
-        data.count
-        
-        var snd = new Media(data.sound);
+        data.count,        
+        data.sound
+
+        var snd = new Media(data.sound);        
         snd.play();
 
         // data.image,
