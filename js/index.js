@@ -99,9 +99,8 @@ function notifyDevice(data){
         data.message,
         data.title,
         data.count
-        //data.sound
-
-        var my_media = new Media("/android_asset/www/" + soundfile);
+        
+        var my_media = new Media("/android_asset/www/" + data.sound);
         my_media.play();
 
         // data.image,
@@ -111,9 +110,7 @@ function notifyDevice(data){
         data.title,
         data.count
         
-        //data.sound
-
-        var snd = new Media(e.sound);        
+        var snd = new Media(data.sound);
         snd.play();
 
         // data.image,
