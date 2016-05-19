@@ -51,6 +51,9 @@ function onDeviceReady() {
     //}
 
 
+
+
+
     var push = PushNotification.init({
         android: {
             senderID: "18994795059"
@@ -63,27 +66,9 @@ function onDeviceReady() {
         windows: {}
     });
 
-    push.on('registration', function (data) {
-        
-
-        localStorage.setItem("fcemcOMS_clientType", "iOS");
-        localStorage.setItem("fcemcOMS_did", data.registrationId);
-        localStorage.setItem("fcemcOMS_uuid", device.uuid);
-
-    });
-
-    push.on('notification', function (data) {
-        data.message,
-        data.title,
-        data.count,
-        data.sound
-        // data.image,
-        // data.additionalData
-    });
-
-    push.on('error', function (e) {
-        // e.message
-    });
+    push.on('registration', registerDevice);
+    push.on('notification', notifyDevice);
+    push.on('error', pushError);
 
 }
 
@@ -95,6 +80,60 @@ function onResume() {
         location.reload();
     }
 }
+
+
+function registerDevice(data) {
+    if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
+        localStorage.setItem("fcemcOMS_clientType", "Android");
+        localStorage.setItem("fcemcOMS_did", data.registrationId);
+        localStorage.setItem("fcemcOMS_uuid", device.uuid);
+    } else {
+        localStorage.setItem("fcemcOMS_clientType", "iOS");
+        localStorage.setItem("fcemcOMS_did", data.registrationId);
+        localStorage.setItem("fcemcOMS_uuid", device.uuid);
+    }
+}
+
+function notifyDevice(data){
+    if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
+        data.message,
+        data.title,
+        data.count
+        //data.sound
+
+        var my_media = new Media("/android_asset/www/" + soundfile);
+        my_media.play();
+
+        // data.image,
+        // data.additionalData
+    } else {
+        data.message,
+        data.title,
+        data.count
+        
+        //data.sound
+
+        var snd = new Media(e.sound);        
+        snd.play();
+
+        // data.image,
+        // data.additionalData
+    }
+    
+}
+
+function pushError(e){
+    alert(e.message);
+}
+
+
+
+
+
+
+
+
+
 
 
 //// handle APNS notifications for iOS
