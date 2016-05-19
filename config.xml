@@ -1,10 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.fcemc.FCEMComs"
+    versionCode = "10"
+    version     = "1.0.0" >
+  
+<!--<?xml version="1.0" encoding="utf-8" ?>
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
 		xmlns:android   = "http://schemas.android.com/apk/res/android"
         id        = "com.fcemc.FCEMComs"
-        version   = "1.0.0">
+        version   = "1.0.0">-->
 
   <name>FCEMC-OMS</name>
 
@@ -125,7 +131,7 @@
   <splash src="res/screen/windows-phone/screen-portrait.jpg"      platform="winphone" />
 
   <gap:config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>100</string>
+    <string>0.0.1</string>
   </gap:config-file>
 
   <gap:config-file platform="android" parent="/manifest">
