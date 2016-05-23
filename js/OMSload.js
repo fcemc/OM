@@ -164,7 +164,7 @@ function registierDevice() {
         var _uuid = localStorage.fcemcOMS_uuid;
         var _ct = localStorage.fcemcOMS_clientType;
 
-        var paramItems = encodeURIComponent(_did) + "/" + _uuid + "/" + _ct + "/" + localStorage.fcemcOMS_uname + "/OMS";
+        var paramItems = encodeURI(_did) + "/" + _uuid + "/" + _ct + "/" + localStorage.fcemcOMS_uname + "/OMS";
         $.ajax({
             type: "GET",
             url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGSTAFFDEVICE/" + paramItems,
@@ -183,7 +183,7 @@ function registierDevice() {
 
 function getCookie() {
     var isCookies = false;
-    if (localStorage.fcemcOMS_uname != null && localStorage.fcemcOMS_pass != null || localStorage.fcemcOMS_uname != "" && localStorage.fcemcOMS_pass != "") {
+    if (localStorage.fcemcOMS_uname != null && localStorage.fcemcOMS_pass != null && localStorage.fcemcOMS_uname != "" && localStorage.fcemcOMS_pass != "") {
         isCookies = true;
     }
     return isCookies;
