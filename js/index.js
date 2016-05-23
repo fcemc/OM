@@ -89,13 +89,13 @@ function registerDevice(data) {
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
         localStorage.setItem("fcemcOMS_clientType", "Android");
 
-        if (data.registrationId.indexOf(':') > -1) {
-            var id = data.registrationId.replace(":", "\\:");            
-            localStorage.setItem("fcemcOMS_did", id);
-        }
-        else {
-            localStorage.setItem("fcemcOMS_did", data.registrationId);
-        }
+        //if (data.registrationId.indexOf(':') > -1) {
+        //    var id = data.registrationId.replace(":", "\\:");            
+        //    localStorage.setItem("fcemcOMS_did", id);
+        //}
+        //else {
+        localStorage.setItem("fcemcOMS_did", data.registrationId);
+        //}
         localStorage.setItem("fcemcOMS_uuid", device.uuid);
     } else {
         localStorage.setItem("fcemcOMS_clientType", "iOS");
@@ -104,7 +104,7 @@ function registerDevice(data) {
     }
 }
 
-function notifyDevice(data){
+function notifyDevice(data) {
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
         data.message,
         data.title,
@@ -119,19 +119,19 @@ function notifyDevice(data){
     } else {
         data.message,
         data.title,
-        data.count,        
+        data.count,
         data.sound
 
-        var snd = new Media(data.sound);        
+        var snd = new Media(data.sound);
         snd.play();
 
         // data.image,
         // data.additionalData
     }
-    
+
 }
 
-function pushError(e){
+function pushError(e) {
     alert(e.message);
 }
 
