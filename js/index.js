@@ -90,8 +90,8 @@ function registerDevice(data) {
         localStorage.setItem("fcemcOMS_clientType", "Android");
 
         if (data.registrationId.indexOf(':') > -1) {
-            var id =  data.registrationId;
-            localStorage.setItem("fcemcOMS_did", id.replace(":","\\:"));
+            var id = data.registrationId.replace(":", "\\:");            
+            localStorage.setItem("fcemcOMS_did", id);
         }
         else {
             localStorage.setItem("fcemcOMS_did", data.registrationId);
