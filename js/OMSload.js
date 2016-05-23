@@ -183,7 +183,7 @@ function registierDevice() {
 
 function getCookie() {
     var isCookies = false;
-    if (localStorage.fcemcOMS_uname != null && localStorage.fcemcOMS_pass != null) {
+    if (localStorage.fcemcOMS_uname != null && localStorage.fcemcOMS_pass != null || localStorage.fcemcOMS_uname != "" && localStorage.fcemcOMS_pass != "") {
         isCookies = true;
     }
     return isCookies;
