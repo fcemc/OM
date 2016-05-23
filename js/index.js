@@ -88,14 +88,7 @@ function onResume() {
 function registerDevice(data) {
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
         localStorage.setItem("fcemcOMS_clientType", "Android");
-
-        //if (data.registrationId.indexOf(':') > -1) {
-        //    var id = data.registrationId.replace(":", "\\:");            
-        //    localStorage.setItem("fcemcOMS_did", id);
-        //}
-        //else {
         localStorage.setItem("fcemcOMS_did", data.registrationId);
-        //}
         localStorage.setItem("fcemcOMS_uuid", device.uuid);
     } else {
         localStorage.setItem("fcemcOMS_clientType", "iOS");

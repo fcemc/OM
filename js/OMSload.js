@@ -164,7 +164,7 @@ function registierDevice() {
         var _uuid = localStorage.fcemcOMS_uuid;
         var _ct = localStorage.fcemcOMS_clientType;
 
-        var paramItems = encodeURI(_did) + "/" + _uuid + "/" + _ct + "/" + localStorage.fcemcOMS_uname + "/OMS";
+        var paramItems = encodeURIComponent(_did) + "/" + _uuid + "/" + _ct + "/" + localStorage.fcemcOMS_uname + "/OMS";
         $.ajax({
             type: "GET",
             url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGSTAFFDEVICE/" + paramItems,
