@@ -1,4 +1,5 @@
 //https://github.com/phonegap-build/PushPlugin/blob/master/Example/www/index.html
+//https://github.com/phonegap/phonegap-plugin-push
 
 var app = {
     // Application Constructor
@@ -56,7 +57,9 @@ function onDeviceReady() {
 
     var push = PushNotification.init({
         android: {
-            senderID: "18994795059"
+            senderID: "18994795059",
+            sound: "true",
+            vibrate: "true"
         },
         ios: {
             alert: "true",
@@ -87,7 +90,8 @@ function registerDevice(data) {
         localStorage.setItem("fcemcOMS_clientType", "Android");
 
         if (data.registrationId.indexOf(':') > -1) {
-            localStorage.setItem("fcemcOMS_did", data.registrationId.split(':')[1]);
+            var id =  data.registrationId;
+            localStorage.setItem("fcemcOMS_did", id.replace(":","\\:"));
         }
         else {
             localStorage.setItem("fcemcOMS_did", data.registrationId);
