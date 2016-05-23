@@ -36,25 +36,7 @@ function onDeviceReady() {
             navigator.app.backHistory();
         }
     }, false);
-
-    //try {
-    //    pushNotification = window.plugins.pushNotification;
-    //    if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
-    //        pushNotification.register(successHandler, errorHandler, { "senderID": "18994795059", "ecb": "onNotification" });		// required!            
-    //    } else {
-    //        pushNotification.register(tokenHandler, errorHandler, { "badge": "true", "sound": "true", "alert": "true", "ecb": "onNotificationAPN" });	// required!
-    //    }
-    //}
-    //catch (err) {
-    //    txt = "There was an error on this page.\n\n";
-    //    txt += "Error description: " + err.message + "\n\n";
-    //    alert(txt);
-    //}
-
-
-
-
-
+    
     var push = PushNotification.init({
         android: {
             senderID: "18994795059",
@@ -72,7 +54,6 @@ function onDeviceReady() {
     push.on('registration', registerDevice);
     push.on('notification', notifyDevice);
     push.on('error', pushError);
-
 }
 
 function onResume() {
@@ -83,7 +64,6 @@ function onResume() {
         location.reload();
     }
 }
-
 
 function registerDevice(data) {
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
