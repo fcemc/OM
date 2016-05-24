@@ -694,11 +694,15 @@ function addNote() {
             contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {
-                $("#spinCont").hide();
+                //$("#spinCont").hide();
                 clearOutageRecords();
-
                 navigator.notification.alert("Notes have been added.", fakeCallback, "Success!", "Ok");
+                //$.mobile.pageContainer.pagecontainer("change", "#page1");
+            },
+            complete: function (jqXHR, textStatus) {
+                $("#spinCont").hide();
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
+                getOutages();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var e = textStatus;
