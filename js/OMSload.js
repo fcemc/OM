@@ -347,7 +347,7 @@ function listOutages(data) {
     if (data.length > 0) {
         var _string = "<div data-role='collapsible-set'>";
         for (i = 0; i < data.length; i++) {
-            _string += '<div data-role="collapsible"><h3>' + data[i].ELEMENTID + '</h3><a onclick="prepNote(\'' + data[i].ELEMENTID.toString() + '\');" href="#" class="ui-btn ui-corner-all notes">Add note to outage</a>';
+            _string += '<div data-role="collapsible"><h3>' + data[i].CASENUM + '</h3><a onclick="prepNote(\'' + data[i].ELEMENTID.toString() + '\');" href="#" class="ui-btn ui-corner-all notes">Add note to outage</a>';
             //_string += "<div class='accdEntry'><b>Customer Count:</b> " + data[i].CUSTCOUNT + "</div>";
             _string += "<div class='accdEntry'><b>Assigned To:</b> " + data[i].ASSIGNEDTO + "</div>";
             _string += "<div class='accdEntry'><b>Start Time:</b> " + data[i].TIMESTRT + "</div>";
