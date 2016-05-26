@@ -130,7 +130,7 @@ function checkLogin() {
                 localStorage.setItem("fcemcOMS_uname", "");
                 localStorage.setItem("fcemcOMS_pass", "");
 
-                $("#loginError").text("Login Unsucessful");
+                $("#loginError").text("Login Unsuccessful");
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -139,7 +139,7 @@ function checkLogin() {
                 $("#loginError").text("No network connection - cannot login!");
             }
             else {
-                $("#loginError").text("Login Unsucessful");
+                $("#loginError").text("Login Unsuccessful");
             }
         }
     });
@@ -306,14 +306,11 @@ function getOutageCodes() {
 function getOutages() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",
-        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES",
-        //url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOUTAGECASES_TEST",
+        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",        
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             listOutages(results.GETACTIVEOUTAGESResult);
-            //listOutages(results.getOUTAGECASES_TESTResult);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
@@ -337,10 +334,6 @@ function getSCADAOutages() {
 }
 
 function listOutages(data) {
-
-    //var canConfirm = ["Calls Bundle", "Predicted", "Predicted: CauseFound"];
-    //var canRestore = ["CauseFound", "CauseUnknown", "CauseUnknown", "Misc", "Closed"];
-
     var canConfirm = ["Assumed"];
     var canRestore = ["Confirmed"];
 
@@ -371,11 +364,6 @@ function listOutages(data) {
         $("#outage").html("");
         $("#outage").html(_string.toString());
         $('#outage [data-role=collapsible-set]').collapsibleset();
-
-        //if (navigator.notification != undefined) {
-        //    navigator.notification.beep(1);
-        //    navigator.notification.vibrate(1000);
-        //}
     }
     else if (data.length == 0) {
         $("#outage").html("");
@@ -560,7 +548,7 @@ function sendConfim(button) {
                 clearOutageRecords();
 
                 //alert("There was an error in confirming outage contact dispatch for assitance with outage.");
-                navigator.notification.alert("There was an error in confirming outage contact dispatch for assitance with outage.", fakeCallback, "Error:", "Ok");
+                navigator.notification.alert("There was an error in confirming outage contact dispatch for assistance with outage.", fakeCallback, "Error:", "Ok");
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
             }
         });
@@ -693,11 +681,9 @@ function addNote() {
             url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
             contentType: "application/json; charset=utf-8",
             cache: false,
-            success: function (results) {
-                //$("#spinCont").hide();
+            success: function (results) {                
                 clearOutageRecords();
                 navigator.notification.alert("Notes have been added.", fakeCallback, "Success!", "Ok");
-                //$.mobile.pageContainer.pagecontainer("change", "#page1");
             },
             complete: function (jqXHR, textStatus) {
                 $("#spinCont").hide();
@@ -706,7 +692,6 @@ function addNote() {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var e = textStatus;
-
                 $("#spinCont").hide();
                 clearOutageRecords();
                 navigator.notification.alert("Note was not added - review notes and make sure no special characters were used.  Or outage may have been updated, please try again.", fakeCallback, "Error!", "Ok");
