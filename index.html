@@ -50,18 +50,7 @@
                 <div id="outage"></div>
                 <div id="scadaoutage"></div>
             </div>
-            <!--<div style="text-align:center;">
-                <div id='avls' data-role='collapsible-set'>
-                    <div data-role='collapsible'>
-                        <h3>AVL</h3>
-                        <div id="avl"></div>
-                    </div>
-                </div>
-            </div>-->
         </div>
-
-
-
         <div style="text-align:center; background-color: gainsboro;" data-role="popup" id="popup" class="ui-content" data-dismissible="false">
             <label id="noteLbl">Enter the notes for the outage</label>                        
             <div>
@@ -71,8 +60,6 @@
             <a href="#" style="background-color:red;" onclick="closeNote();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-c" data-rel="back">Cancel</a>
             <a href="#" onclick="addNote();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Submit</a>
         </div>
-
-
     </div>
 
     <div class="pg" data-role="page" id="page2">
@@ -84,7 +71,7 @@
                 <div data-role="navbar">
                     <ul>
                         <li><a id="tab-one" href="#one" data-ajax=" false">Current Device</a></li>
-                        <li><a id="tab-two" href="#two" data-ajax="false">Upsteam Device</a></li>
+                        <li><a id="tab-two" href="#two" data-ajax="false">Upstream Device</a></li>
                     </ul>
                 </div>
                 <div id="one" class="ui-body-d ui-content" style="background-color:white; color:black;">
@@ -116,7 +103,7 @@
             <h1>Restore Outage</h1>
         </div>
         <div role="main" class="ui-content" style="color:black;">
-            Restore outgae on device: <label id="restoreLbl"></label>
+            Restore outage on device: <label id="restoreLbl"></label>
             <div class="ui-field-contain">
                 <div>
                     <label for="select-cause">Outage Cause:</label>
