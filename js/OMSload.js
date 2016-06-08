@@ -597,14 +597,15 @@ function restoreOutage() {
 }
 
 function sendRestore(button) {
-    if (button == 2) {
-        //$("#spinCont").show();
+    if (button == 2) {        
         var cause = $("#select-cause option:selected").val();
         var equip = $("#select-equipment option:selected").val();
         var weather = $("#select-weather option:selected").val();
         var other = $("#select-other option:selected").val();
 
-        if (cause > 0 && equip > -1 && weather > 0 && other > 0) {
+        var isStorm = $("#select-cause option:selected").text().toLowerCase().indexOf("storm");
+
+        if (cause > 0 && equip > -1 && weather > 0 && other > 0 || isStorm >= 0) {
             var dataString = outageEventID + "/" + outageDevice + "/" + cause + "/" + equip + "/" + weather + "/" + other + "/" + localStorage.fcemcOMS_uname;
             outageBeingRestored = true;
             $.ajax({
