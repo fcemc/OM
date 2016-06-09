@@ -1,4 +1,3 @@
-//https://github.com/phonegap-build/PushPlugin/blob/master/Example/www/index.html
 //https://github.com/phonegap/phonegap-plugin-push
 
 var app = {
@@ -46,7 +45,8 @@ function onDeviceReady() {
         ios: {
             alert: "true",
             badge: "true",
-            sound: "true"
+            sound: "true",
+            clearBadge: "true"
         },
         windows: {}
     });
