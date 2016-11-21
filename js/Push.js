@@ -5,7 +5,7 @@
  * Module dependencies.
  */
 
-var exec = cordova.require('cordova/exec');
+//var exec = cordova.require('cordova/exec');
 
 /**
  * PushNotification constructor.
