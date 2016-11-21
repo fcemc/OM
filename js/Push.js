@@ -5,7 +5,7 @@
  * Module dependencies.
  */
 
-//var exec = cordova.require('cordova/exec');
+var exec = cordova.require('cordova/exec');
 
 /**
  * PushNotification constructor.
@@ -34,7 +34,7 @@ var PushNotification = function (options) {
     var success = function (result) {
         if (result && typeof result.registrationId !== 'undefined') {
             that.emit('registration', result);
-        } else if (result && result.additionalData && typeof result.additionalData.callback !== 'undefined') {
+        } else if (result && result.additionalData && typeof result.additionalData.actionCallback !== 'undefined') {
             var executeFunctionByName = function (functionName, context /*, args */) {
                 var args = Array.prototype.slice.call(arguments, 2);
                 var namespaces = functionName.split('.');
@@ -45,7 +45,7 @@ var PushNotification = function (options) {
                 return context[func].apply(context, args);
             };
 
-            executeFunctionByName(result.additionalData.callback, window, result);
+            executeFunctionByName(result.additionalData.actionCallback, window, result);
         } else if (result) {
             that.emit('notification', result);
         }
@@ -96,6 +96,52 @@ PushNotification.prototype.unregister = function (successCallback, errorCallback
 };
 
 /**
+ * subscribe to a topic
+ * @param   {String}      topic               topic to subscribe
+ * @param   {Function}    successCallback     success callback
+ * @param   {Function}    errorCallback       error callback
+ * @return  {void}
+ */
+PushNotification.prototype.subscribe = function (topic, successCallback, errorCallback) {
+    if (!errorCallback) { errorCallback = function () { }; }
+
+    if (typeof errorCallback !== 'function') {
+        console.log('PushNotification.subscribe failure: failure parameter not a function');
+        return;
+    }
+
+    if (typeof successCallback !== 'function') {
+        console.log('PushNotification.subscribe failure: success callback parameter must be a function');
+        return;
+    }
+
+    exec(successCallback, errorCallback, 'PushNotification', 'subscribe', [topic]);
+};
+
+/**
+ * unsubscribe to a topic
+ * @param   {String}      topic               topic to unsubscribe
+ * @param   {Function}    successCallback     success callback
+ * @param   {Function}    errorCallback       error callback
+ * @return  {void}
+ */
+PushNotification.prototype.unsubscribe = function (topic, successCallback, errorCallback) {
+    if (!errorCallback) { errorCallback = function () { }; }
+
+    if (typeof errorCallback !== 'function') {
+        console.log('PushNotification.unsubscribe failure: failure parameter not a function');
+        return;
+    }
+
+    if (typeof successCallback !== 'function') {
+        console.log('PushNotification.unsubscribe failure: success callback parameter must be a function');
+        return;
+    }
+
+    exec(successCallback, errorCallback, 'PushNotification', 'unsubscribe', [topic]);
+};
+
+/**
  * Call this to set the application icon badge
  */
 
@@ -133,6 +179,27 @@ PushNotification.prototype.getApplicationIconBadgeNumber = function (successCall
     }
 
     exec(successCallback, errorCallback, 'PushNotification', 'getApplicationIconBadgeNumber', []);
+};
+
+/**
+ * Get the application icon badge
+ */
+
+PushNotification.prototype.clearAllNotifications = function (successCallback, errorCallback) {
+    if (!successCallback) { successCallback = function () { }; }
+    if (!errorCallback) { errorCallback = function () { }; }
+
+    if (typeof errorCallback !== 'function') {
+        console.log('PushNotification.clearAllNotifications failure: failure parameter not a function');
+        return;
+    }
+
+    if (typeof successCallback !== 'function') {
+        console.log('PushNotification.clearAllNotifications failure: success callback parameter must be a function');
+        return;
+    }
+
+    exec(successCallback, errorCallback, 'PushNotification', 'clearAllNotifications', []);
 };
 
 /**
@@ -190,7 +257,12 @@ PushNotification.prototype.emit = function () {
     }
 
     for (var i = 0, length = this._handlers[eventName].length; i < length; i++) {
-        this._handlers[eventName][i].apply(undefined, args);
+        var callback = this._handlers[eventName][i];
+        if (typeof callback === 'function') {
+            callback.apply(undefined, args);
+        } else {
+            console.log('event handler: ' + eventName + ' must be a function');
+        }
     }
 
     return true;
