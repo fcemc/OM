@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     xmlns:android   = "http://schemas.android.com/apk/res/android"
     id          = "com.fcemc.FCEMComs"    
-    version     = "1.0.1" >
+    version     = "1.0.2" >
   
   <name>FCEMC-OMS</name>
 
@@ -136,7 +136,7 @@
   <!--<preference name="SplashScreenDelay" value="10000" />-->
 
   <gap:config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>1.0.1</string>
+    <string>1.0.2</string>
   </gap:config-file>
 
   <gap:config-file platform="android" parent="/manifest">
