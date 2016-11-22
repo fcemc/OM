@@ -78,17 +78,14 @@ function registerDevice(data) {
 }
 
 function notifyDevice(data) {
-        //var my_media = new Media("/android_asset/www/" + data.sound);
-        var my_media = new Media(data.sound);
-        my_media.play();
-
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
         data.message,
         data.title,
-        data.count,
-        data.sound
+        data.count
+        //data.sound
 
-        var my_media = new Media("/android_asset/www/" + data.sound);        
+        //var my_media = new Media("/android_asset/www/" + data.sound);
+        var my_media = new Media("/android_asset/www/fcemcsound.wav");
         my_media.play();
 
         // data.image,
@@ -96,8 +93,8 @@ function notifyDevice(data) {
     } else {
         data.message,
         data.title,
-        data.count,
-        data.sound
+        data.count
+        //data.sound
 
         var snd = new Media(data.sound);
         snd.play();
