@@ -80,10 +80,10 @@ function registerDevice(data) {
 function notifyDevice(data) {
     data.message,
     data.title,
-    data.count,
-    data.sound
+    data.count
+    //data.sound
 
-    var my_media = new Media("file:///sounds/" + data.sound);
+    var my_media = new Media("file://sounds/" + data.sound);
     my_media.play();
 
 
