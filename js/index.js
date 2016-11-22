@@ -83,8 +83,8 @@ function notifyDevice(data) {
     data.count
     data.sound
 
-    var my_media = new Media(data.sound);
-    my_media.play();
+    //var my_media = new Media(data.sound);
+    //my_media.play();
 
 
     //    //var my_media = new Media("/android_asset/www/" + data.sound);
