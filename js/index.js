@@ -78,44 +78,34 @@ function registerDevice(data) {
 }
 
 function notifyDevice(data) {
-    data.message,
-    data.title,
-    data.count
-    data.sound
+        //var my_media = new Media("/android_asset/www/" + data.sound);
+        var my_media = new Media(data.sound);
+        my_media.play();
 
-    //var my_media = new Media(data.sound);
-    //my_media.play();
+    if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
+        data.message,
+        data.title,
+        data.count,
+        data.sound
 
+        //var my_media = new Media("/android_asset/www/" + data.sound);
+        var my_media = new Media(data.sound);
+        my_media.play();
 
-    //    //var my_media = new Media("/android_asset/www/" + data.sound);
-    //    var my_media = new Media(data.sound);
-    //    my_media.play();
+        // data.image,
+        // data.additionalData
+    } else {
+        data.message,
+        data.title,
+        data.count,
+        data.sound
 
-    //if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
-    //    data.message,
-    //    data.title,
-    //    data.count,
-    //    data.sound
+        var snd = new Media(data.sound);
+        snd.play();
 
-    //    //var my_media = new Media("/android_asset/www/" + data.sound);
-    //    var my_media = new Media(data.sound);
-    //    my_media.play();
-
-    //    // data.image,
-    //    // data.additionalData
-    //} else {
-    //    data.message,
-    //    data.title,
-    //    data.count,
-    //    data.sound
-
-    //    var snd = new Media(data.sound);
-    //    snd.play();
-
-    //    // data.image,
-    //    // data.additionalData
-    //}
-
+        // data.image,
+        // data.additionalData
+    }
 }
 
 function pushError(e) {
