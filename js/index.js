@@ -83,7 +83,7 @@ function notifyDevice(data) {
     data.count,
     data.sound
 
-    var my_media = new Media(data.sound);
+    var my_media = new Media("file:///sounds/" + data.sound);
     my_media.play();
 
 
