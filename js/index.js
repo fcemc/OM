@@ -39,13 +39,13 @@ function onDeviceReady() {
     var push = PushNotification.init({
         android: {
             senderID: "18994795059",
-            sound: "true",
+            //sound: "true",
             vibrate: "true"
         },
         ios: {
             alert: "true",
             badge: "true",
-            sound: "true",
+            //sound: "true",
             clearBadge: "true"
         },
         windows: {}
