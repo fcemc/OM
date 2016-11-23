@@ -85,8 +85,8 @@ function notifyDevice(data) {
         //data.sound
 
         //var my_media = new Media("/android_asset/www/" + data.sound);
-        var my_media = new Media("/android_asset/www/content" + data.sound);
-        my_media.play();
+        //var my_media = new Media("/android_asset/www/content" + data.sound);
+        //my_media.play();
 
         // data.image,
         // data.additionalData
@@ -96,8 +96,8 @@ function notifyDevice(data) {
         data.count
         //data.sound
 
-        var snd = new Media(data.sound);
-        snd.play();
+        //var snd = new Media(data.sound);
+        //snd.play();
 
         // data.image,
         // data.additionalData
