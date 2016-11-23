@@ -39,11 +39,13 @@ function onDeviceReady() {
     var push = PushNotification.init({
         android: {
             senderID: "18994795059",
+            sound: "true",
             vibrate: "true"
         },
         ios: {
             alert: "true",
             badge: "true",
+            sound: "true",
             clearBadge: "true"
         },
         windows: {}
@@ -79,24 +81,25 @@ function notifyDevice(data) {
     if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
         data.message,
         data.title,
-        data.count
+        data.count,
+        data.sound
         
-        var my_media = new Media("/android_asset/www/fcemcsound.wav");
-        my_media.play();
+        //var my_media = new Media("/android_asset/www/fcemcsound.wav");
+        //my_media.play();
         
         // data.image,
         // data.additionalData
     } else if(device.platform == "iOS") {
         data.message,
         data.title,
-        data.count
-        //data.sound
+        data.count,
+        data.sound
 
         //var snd = new Media(data.sound);
         //snd.play();
 
-        var my_media = new Media("fcemcsound.wav");
-        my_media.play();
+        //var my_media = new Media("fcemcsound.wav");
+        //my_media.play();
 
         // data.image,
         // data.additionalData
