@@ -420,11 +420,9 @@ function listSCADAOutages(data) {
         if (navigator.notification != undefined) {
             //navigator.notification.beep(1);
 
-            var my_media1 = new Media("/android_asset/www/fcemcsound.wav");
-            my_media1.play();
-
-            var my_media2 = new Media("/android_asset/www/content/fcemcsound.wav");
-            my_media2.play();
+            var my_media = new Media("/android_asset/www/fcemcsound.wav");
+            my_media.play();
+                       
 
             navigator.notification.vibrate(1000);
         }

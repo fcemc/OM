@@ -88,6 +88,10 @@ function notifyDevice(data) {
         //var my_media = new Media("/android_asset/www/content" + data.sound);
         //my_media.play();
 
+        var my_media = new Media("/android_asset/www/fcemcsound.wav");
+        my_media.play();
+
+
         // data.image,
         // data.additionalData
     } else {
@@ -98,6 +102,9 @@ function notifyDevice(data) {
 
         //var snd = new Media(data.sound);
         //snd.play();
+
+        var my_media = new Media("/android_asset/www/fcemcsound.wav");
+        my_media.play();
 
         // data.image,
         // data.additionalData
