@@ -417,13 +417,16 @@ function listSCADAOutages(data) {
         $('#scadaoutage [data-role=collapsible-set]').collapsibleset();
 
 
-        if (navigator.notification != undefined) {
+        if (navigator.notification != undefined) {                 
+            if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
+                var my_media = new Media("/android_asset/www/fcemcsound.wav");
+                my_media.play();
+            } else if (device.platform == "iOS") {                
+                var my_media = new Media("fcemcsound.wav");
+                my_media.play();
+            }
+
             //navigator.notification.beep(1);
-
-            var my_media = new Media("/android_asset/www/fcemcsound.wav");
-            my_media.play();
-                       
-
             navigator.notification.vibrate(1000);
         }
     }

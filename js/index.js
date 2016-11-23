@@ -88,7 +88,7 @@ function notifyDevice(data) {
         
         // data.image,
         // data.additionalData
-    } else {
+    } else if(device.platform == "iOS") {
         data.message,
         data.title,
         data.count
