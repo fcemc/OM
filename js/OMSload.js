@@ -31,7 +31,7 @@ $(document).ready(function () {
             "hideMethod": "fadeOut"
         }
 
-        $.connection.hub.url = "http://gis.fourcty.org/FCEMCrest/signalr/hubs";
+        $.connection.hub.url = "https://gis.fourcty.org/FCEMCrest/signalr/hubs";
 
         $.connection.hub.logging = true;
 
@@ -106,7 +106,7 @@ function checkLogin() {
     var paramItems = user + "|" + _pw;
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -167,7 +167,7 @@ function registierDevice() {
         var paramItems = encodeURIComponent(_did) + "/" + _uuid + "/" + _ct + "/" + localStorage.fcemcOMS_uname + "/OMS";
         $.ajax({
             type: "GET",
-            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGSTAFFDEVICE/" + paramItems,
+            url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGSTAFFDEVICE/" + paramItems,
             contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {
@@ -209,7 +209,7 @@ function checkCookie() {
 function register() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/initalizeLink",
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/initalizeLink",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -224,31 +224,15 @@ function register() {
 
 function initLoad() {
     $("#spinCont").show();
-    //getAVL();
     getOutages();
     getSCADAOutages();
     getOutageCodes();
 }
 
-//function getAVL() {
-//    $.ajax({
-//        type: "GET",
-//        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getAVLstatus",
-//        contentType: "application/json; charset=utf-8",
-//        cache: false,
-//        success: function (results) {
-//            AVLResults(results.getAVLstatusResult);
-//        },
-//        error: function (jqXHR, textStatus, errorThrown) {
-//            var e = errorThrown;
-//        }
-//    });
-//}
-
 function getOutageCodes() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageCodes",
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageCodes",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -306,7 +290,7 @@ function getOutageCodes() {
 function getOutages() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",        
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",        
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -321,7 +305,7 @@ function getOutages() {
 function getSCADAOutages() {
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/ALLSTATUS",
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/ALLSTATUS",
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -464,29 +448,13 @@ function getSpinner() {
     spinner = new Spinner(opts).spin(target);
 }
 
-//function AVLResults(data) {
-//    if (data.length > 0) {
-//        $("#avl").html("");
-
-//        var _string = "";
-//        for (i = 0; i < data.length; i++) {
-//            _string += "<div class='accdEntry'>VID: " + data[i].VID + " - " + data[i].LOG_DATETIME + "</div>";
-//        }
-
-//        $("#avl").html(_string.toString());
-//        $('#outageList [data-role=collapsible-set]').collapsibleset();
-//    }
-
-//    $("#spinCont").hide();
-//}
-
 function preConfirmOutage(oD) {
     $("#spinCont").show();
     clearOutageRecords();
 
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -537,7 +505,7 @@ function sendConfim(button) {
 
         $.ajax({
             type: "GET",
-            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/confirmOutage/" + dataString,
+            url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/confirmOutage/" + dataString,
             contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {            
@@ -575,7 +543,7 @@ function preRestoreOutage(oD) {
 
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -618,7 +586,7 @@ function sendRestore(button) {
             outageBeingRestored = true;
             $.ajax({
                 type: "GET",
-                url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/restoreOutage/" + dataString,
+                url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/restoreOutage/" + dataString,
                 contentType: "application/json; charset=utf-8",
                 cache: false,
                 success: function (results) {                    
@@ -662,7 +630,7 @@ function prepNote(notedevice) {
     $("#spinCont").show();
     $.ajax({
         type: "GET",
-        url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + notedevice,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + notedevice,
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -687,7 +655,7 @@ function addNote() {
         var dataString = outageEventID + "/" + outageDevice + "/[" + $("#noteNotes").val() + "]";
         $.ajax({
             type: "GET",
-            url: "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
+            url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
             contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {                
