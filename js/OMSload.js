@@ -107,7 +107,7 @@ function checkLogin() {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             if (results.authenticateYouSirResult) {
@@ -168,7 +168,7 @@ function registierDevice() {
         $.ajax({
             type: "GET",
             url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/REGSTAFFDEVICE/" + paramItems,
-            contentType: "application/json; charset=utf-8",
+            //contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {
                 var r = results;
@@ -210,7 +210,7 @@ function register() {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/initalizeLink",
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             var r = results;
@@ -233,7 +233,7 @@ function getOutageCodes() {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageCodes",
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             var res = results.getOutageCodesResult;
@@ -291,7 +291,7 @@ function getOutages() {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",        
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             listOutages(results.GETACTIVEOUTAGESResult);
@@ -455,7 +455,7 @@ function preConfirmOutage(oD) {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             var res = results.getOutageEventInfoResult;
@@ -506,7 +506,7 @@ function sendConfim(button) {
         $.ajax({
             type: "GET",
             url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/confirmOutage/" + dataString,
-            contentType: "application/json; charset=utf-8",
+            //contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {            
                 clearOutageRecords();                
@@ -544,7 +544,7 @@ function preRestoreOutage(oD) {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + oD,
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             var res = results.getOutageEventInfoResult;
@@ -587,7 +587,7 @@ function sendRestore(button) {
             $.ajax({
                 type: "GET",
                 url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/restoreOutage/" + dataString,
-                contentType: "application/json; charset=utf-8",
+                //contentType: "application/json; charset=utf-8",
                 cache: false,
                 success: function (results) {                    
                     clearOutageRecords();
@@ -631,7 +631,7 @@ function prepNote(notedevice) {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/getOutageEventInfo/" + notedevice,
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             var res = results.getOutageEventInfoResult;           
