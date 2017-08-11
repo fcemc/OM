@@ -106,30 +106,21 @@ function checkLogin() {
     var paramItems = user + "|" + _pw;
     $.ajax({
         type: "GET",
-        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,
-        //contentType: "application/json; charset=utf-8",
-        cache: false,
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,        
         success: function (results) {
             if (results.authenticateYouSirResult) {
                 $("#loginError").text("");
-
                 $.mobile.pageContainer.pagecontainer("change", "#page1");
-
                 $("#spinCont").show();
-
                 if (localStorage.fcemcOMS_uname == undefined || localStorage.fcemcOMS_uname == "") {
                     setCookie(user, _pw, 1); //expires 1 day from inital login
                 }
-
                 register();
                 initLoad();
-
             }
             else {
-                //window.localStorage.clear();
                 localStorage.setItem("fcemcOMS_uname", "");
                 localStorage.setItem("fcemcOMS_pass", "");
-
                 $("#loginError").text("Login Unsuccessful");
             }
         },
