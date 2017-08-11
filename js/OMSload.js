@@ -280,6 +280,16 @@ function getOutageCodes() {
                 }));
             }
 
+            //var _call = res[4].items.sort(function (a, b) { return a.value - b.value });
+            ////update other codes
+            //$('#select-other option').remove();
+            //for (d = 0; d < _other.length; d++) {
+            //    $('#select-other').append($('<option/>', {
+            //        value: _call[d].value,
+            //        text: _call[d].desc
+            //    }));
+            //}
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
@@ -306,7 +316,7 @@ function getSCADAOutages() {
     $.ajax({
         type: "GET",
         url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/ALLSTATUS",
-        contentType: "application/json; charset=utf-8",
+        //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
             listSCADAOutages(results.ALLSTATUSResult);
@@ -490,7 +500,14 @@ function preConfirmOutage(oD) {
 
 function confirmOutage() {
     $("#spinCont").show();
-    navigator.notification.confirm("Continue confirming outage?", sendConfim, "Verify:", "Cancel, Ok");
+
+    if (navigator.notification != undefined) {
+        navigator.notification.confirm("Continue confirming outage?", sendConfim, "Verify:", "Cancel, Ok");
+    }
+    else {
+        alert("Continue confirming outage?");
+        sendConfim(2);
+    }
 }
 
 function sendConfim(button) {
@@ -509,8 +526,14 @@ function sendConfim(button) {
             //contentType: "application/json; charset=utf-8",
             cache: false,
             success: function (results) {            
-                clearOutageRecords();                
-                navigator.notification.alert("Outage has been confirmed!", fakeCallback, "Success!", "Ok");                
+                clearOutageRecords();
+                if (navigator.notification != undefined) {
+                    navigator.notification.alert("Outage has been confirmed!", fakeCallback, "Success!", "Ok");    
+                }
+                else {
+                    alert("Outage has been confirmed!");
+                    sendConfim(2);
+                }
             },
             complete: function (jqXHR, textStatus) {
                 $("#spinCont").hide();
@@ -569,7 +592,12 @@ function preRestoreOutage(oD) {
 
 function restoreOutage() {
     $("#spinCont").show();
-    navigator.notification.confirm("Continue restoring outage?", sendRestore, "Verify:", "Cancel, Ok");
+    if (navigator.notification != undefined) {
+        navigator.notification.confirm("Continue restoring outage?", sendRestore, "Verify:", "Cancel, Ok");
+    }
+    else {
+        sendRestore(2);
+    }    
 }
 
 function sendRestore(button) {
@@ -591,7 +619,14 @@ function sendRestore(button) {
                 cache: false,
                 success: function (results) {                    
                     clearOutageRecords();
-                    navigator.notification.alert("Outage has been restored!", fakeCallback, "Success!", "Ok");
+
+                    if (navigator.notification != undefined) {
+                        navigator.notification.alert("Outage has been restored!", fakeCallback, "Success!", "Ok");
+                    }
+                    else {
+                        alert("Outage has been restored!");
+                    }
+                    
                 },
                 complete: function ( jqXHR, textStatus) {                    
                     $("#spinCont").hide();
@@ -607,7 +642,13 @@ function sendRestore(button) {
         else {
             //alert("All selections must be made in order to restore outage!");
             $("#spinCont").hide();
-            navigator.notification.alert("All selections must be made in order to restore outage!", fakeCallback, "Error:", "Ok");
+
+            if (navigator.notification != undefined) {
+                navigator.notification.alert("All selections must be made in order to restore outage!", fakeCallback, "Error:", "Ok");
+            }
+            else {
+                alert("All selections must be made in order to restore outage!");
+            }            
         }
     }
     else if (button == 1) {
@@ -656,11 +697,15 @@ function addNote() {
         $.ajax({
             type: "GET",
             url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/addOutageRemarks/" + dataString,
-            contentType: "application/json; charset=utf-8",
+            //contentType: "application/json; charset=utf-8",
             cache: false,
-            success: function (results) {                
-                clearOutageRecords();
-                navigator.notification.alert("Notes have been added.", fakeCallback, "Success!", "Ok");
+            success: function (results) {
+                if (results.addOutageRemarksResult.errorStringField == null) {
+                    clearOutageRecords();
+                    if (navigator.notification != undefined) {
+                        navigator.notification.alert("Notes have been added.", fakeCallback, "Success!", "Ok");
+                    }
+                }
             },
             complete: function (jqXHR, textStatus) {
                 $("#spinCont").hide();
@@ -671,7 +716,17 @@ function addNote() {
                 var e = textStatus;
                 $("#spinCont").hide();
                 clearOutageRecords();
-                navigator.notification.alert("Note was not added - review notes and make sure no special characters were used.  Or outage may have been updated, please try again.", fakeCallback, "Error!", "Ok");
+
+
+                if (navigator.notification != undefined) {
+                    navigator.notification.alert("Note was not added - review notes and make sure no special characters were used.  Or outage may have been updated, please try again.", fakeCallback, "Error!", "Ok");
+                }
+                else {
+                    alert("Note was not added");
+                }
+
+
+                
             }
         });
     }
