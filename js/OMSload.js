@@ -130,7 +130,7 @@ function checkLogin() {
                 $("#loginError").text("No network connection - cannot login!");
             }
             else {
-                $("#loginError").text("Login Unsuccessful");
+                $("#loginError").text("Login Unsuccessful - textStatus: " + textStatus.toString() + " errorThrown: " + errorThrown.toString());
             }
         }
     });
