@@ -132,36 +132,14 @@ function checkLogin() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
-            var errorTxt, errorTxt1, errorTxt2;
 
-            if (!(navigator.onLine)) {
-                $("#loginError").text("No network connection - cannot login!");
-            }
-            else {
-                if (xhrObj.status !== 200) {
-                    errorTxt = 'Error Log: ';
-                    errorTxt = errorTxt + "Error code specific:'" + xhrObj.status + "'\n";
-                    errorTxt = errorTxt + "Error status specific:'" + xhrObj.statusText + "'\n";
-                    errorTxt = errorTxt + "Error code general:'" + text + "'\n";
-                    errorTxt = errorTxt + "Error status general:'" + errorObj.message + "'\n";
-                    //$("#loginError").text("Login Unsuccessful - jqXHR: " + errorTxt);
-                }
-                else {
-                    errorTxt1 = 'Error Log: ' + xhrObj.status;
-                    errorTxt1 = errorTxt1 + " Error code specific:'" + xhrObj.status + "'\n";
-                    errorTxt1 = errorTxt1 + "Error status specific:'" + xhrObj.statusText + "'\n";
-                    errorTxt1 = errorTxt1 + "Error code general:'" + text + "'\n";
-                    errorTxt1 = errorTxt1 + "Error status general:'" + errorObj.message + "'\n";
-                    //$("#loginError").text("Login Unsuccessful - jqXHR: " + errorTxt1);
-                }
+            var errorTxt2 = 'Error Log: ' + xhrObj.status;
+            errorTxt2 = errorTxt2 + " Error code specific:'" + xhrObj.status + "'\n";
+            errorTxt2 = errorTxt2 + "Error status specific:'" + xhrObj.statusText + "'\n";
+            errorTxt2 = errorTxt2 + "Error code general:'" + text + "'\n";
+            errorTxt2 = errorTxt2 + "Error status general:'" + errorObj.message + "'\n";
+            $("#loginError").text("Login Unsuccessful - : " + errorTxt2);
 
-                var errorTxt2 = 'Error Log: ' + xhrObj.status;
-                errorTxt2 = errorTxt2 + " Error code specific:'" + xhrObj.status + "'\n";
-                errorTxt2 = errorTxt2 + "Error status specific:'" + xhrObj.statusText + "'\n";
-                errorTxt2 = errorTxt2 + "Error code general:'" + text + "'\n";
-                errorTxt2 = errorTxt2 + "Error status general:'" + errorObj.message + "'\n";
-                $("#loginError").text("Login Unsuccessful - : " + errorTxt + "|" + errorTxt1 + "|" + errorTxt2);
-            }
         }
     });
 }
