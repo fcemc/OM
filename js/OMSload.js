@@ -105,10 +105,10 @@ function checkLogin() {
     var _pw = $("#pw").val().trim();
     var paramItems = user + "|" + _pw;
     $.ajax({
-        async: true,
         type: "GET",
-        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,        
-        contentType: "application/json; charset=utf-8",        
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSi/" + paramItems,        
+        contentType: "application/json; charset=utf-8",
+        cache: false,
         success: function (results) {
             if (results.authenticateYouSirResult) {
                 $("#loginError").text("");
@@ -132,7 +132,7 @@ function checkLogin() {
                 $("#loginError").text("No network connection - cannot login!");
             }
             else {
-                $("#loginError").text("Login Unsuccessful - textStatus: " + textStatus.toString() + " errorThrown: " + errorThrown.toString() + " jqXHR: " + jqXHR);
+                $("#loginError").text("Login Unsuccessful - jqXHR: " + jqXHR);
             }
         }
     });
