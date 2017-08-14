@@ -127,6 +127,9 @@ function checkLogin() {
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
+            $("#loginError").text("");
+            $.mobile.pageContainer.pagecontainer("change", "#page1");
+            $("#spinCont").show();
             initLoad();
             //var e = errorThrown;
             //if (!(navigator.onLine)) {
