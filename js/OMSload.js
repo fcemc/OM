@@ -105,11 +105,10 @@ function checkLogin() {
     var _pw = $("#pw").val().trim();
     var paramItems = user + "|" + _pw;
     $.ajax({
-        type: "GET",
-        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,
-        contentType: "application/json; charset=utf-8",
-        cache: false,
         async: true,
+        type: "GET",
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,        
+        contentType: "application/json; charset=utf-8",        
         success: function (results) {
             if (results.authenticateYouSirResult) {
                 $("#loginError").text("");
