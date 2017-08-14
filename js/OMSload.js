@@ -132,7 +132,7 @@ function checkLogin() {
                 $("#loginError").text("No network connection - cannot login!");
             }
             else {
-                $("#loginError").text("Login Unsuccessful - jqXHR: " + jqXHR);
+                $("#loginError").text("Login Unsuccessful - jqXHR: " + jqXHR.statusText);
             }
         }
     });
