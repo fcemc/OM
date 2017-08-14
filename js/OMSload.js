@@ -106,7 +106,7 @@ function checkLogin() {
     var paramItems = user + "|" + _pw;
     $.ajax({
         type: "GET",
-        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSi/" + paramItems,        
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,        
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -127,13 +127,14 @@ function checkLogin() {
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            var e = errorThrown;
-            if (!(navigator.onLine)) {
-                $("#loginError").text("No network connection - cannot login!");
-            }
-            else {
-                $("#loginError").text("Login Unsuccessful - jqXHR: " + jqXHR.statusText);
-            }
+            initLoad();
+            //var e = errorThrown;
+            //if (!(navigator.onLine)) {
+            //    $("#loginError").text("No network connection - cannot login!");
+            //}
+            //else {
+            //    $("#loginError").text("Login Unsuccessful - jqXHR: " + jqXHR.statusText);
+            //}
         }
     });
 }
