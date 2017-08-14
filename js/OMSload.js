@@ -141,11 +141,16 @@ function checkLogin() {
                     errorTxt = errorTxt + "Error status specific:'" + xhrObj.statusText + "'\n";
                     errorTxt = errorTxt + "Error code general:'" + text + "'\n";
                     errorTxt = errorTxt + "Error status general:'" + errorObj.message + "'\n";
-                    
+                    $("#loginError").text("Login Unsuccessful - jqXHR: " + errorTxt);
                 }
-
-
-                $("#loginError").text("Login Unsuccessful - jqXHR: " + errorTxt);
+                else {
+                    var errorTxt1 = 'Error Log: ' + xhrObj.status;
+                    errorTxt1 = errorTxt1 + " Error code specific:'" + xhrObj.status + "'\n";
+                    errorTxt1 = errorTxt1 + "Error status specific:'" + xhrObj.statusText + "'\n";
+                    errorTxt1 = errorTxt1 + "Error code general:'" + text + "'\n";
+                    errorTxt1 = errorTxt1 + "Error status general:'" + errorObj.message + "'\n";
+                    $("#loginError").text("Login Unsuccessful - jqXHR: " + errorTxt1);
+                }
             }
         }
     });
