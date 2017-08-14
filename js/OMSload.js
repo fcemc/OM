@@ -103,10 +103,11 @@ $(document).ready(function () {
 function checkLogin() {
     user = $("#un").val().trim();
     var _pw = $("#pw").val().trim();
-    var paramItems = user + "|" + _pw;
+    var paramItems = "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + user + "|" + _pw;
     $.ajax({
         type: "GET",
-        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,        
+        //url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,        
+        url: paramItems,        
         //contentType: "application/json; charset=utf-8",
         //cache: false,
         //timeout: 5000,
@@ -131,7 +132,7 @@ function checkLogin() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var e = errorThrown;
-            var errorTxt,errorTxt1,errorTxt;
+            var errorTxt,errorTxt1,errorTxt2;
 
             if (!(navigator.onLine)) {
                 $("#loginError").text("No network connection - cannot login!");
