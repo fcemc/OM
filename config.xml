@@ -75,6 +75,7 @@
   <plugin name="cordova-plugin-splashscreen"/>
   <plugin name="cordova-plugin-vibration"/>
   <plugin name="cordova-plugin-statusbar"/>
+  <plugin name="cordova-plugin-whitelist"/>
   
   <plugin name="phonegap-plugin-push" spec="1.6.0">
     <param name="SENDER_ID" value="18994795059" />
@@ -146,7 +147,10 @@
       </activity>-->
     </application>
   </gap:config-file>
-  
+
+
+  <access origin="https://gis.fourcty.org" />
+
   <!--
         Define access to external domains.
         <access />            - a blank access tag denies access to all external resources.
