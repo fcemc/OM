@@ -89,8 +89,7 @@ $(document).ready(function () {
             $.mobile.pageContainer.pagecontainer("change", "#pageLogin");
         }
     }
-
-
+    
     $("#noteNotes").textinput({
         autogrow: false,
         corners: false
@@ -103,7 +102,7 @@ $(document).ready(function () {
 function checkLogin() {
     user = $("#un").val().trim();
     var _pw = $("#pw").val().trim();
-    var paramItems = "http://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + user + "|" + _pw;
+    var paramItems = "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + user + "|" + _pw;
     $.ajax({
         type: "GET",
         crossDomain: true,
