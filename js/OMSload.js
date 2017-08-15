@@ -106,8 +106,7 @@ function checkLogin() {
     var paramItems = "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + user + "|" + _pw;
     $.ajax({
         type: "GET",
-        contentType: "application/json; charset=utf-8",
-        cache: false,
+        crossDomain: true,
         url: paramItems,                
         success: function (results) {
             if (results.authenticateYouSirResult) {
