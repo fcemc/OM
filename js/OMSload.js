@@ -1,4 +1,4 @@
-﻿var tryingToReconnect = false, user, badgeCount = 0, outageEventID, outagePhase, outageDevice, outageBeingRestored = false;
+﻿var tryingToReconnect = false, user, badgeCount = 0, outageEventID, outagePhase, outageDevice,outageBeingRestored = false;
 
 $(document).ready(function () {
     //adjust for status bar in iOS
@@ -96,7 +96,7 @@ $(document).ready(function () {
         corners: false
     });
     $("#lettersLeft").text("Max characters: " + $("#noteNotes")[0].maxLength);
-
+    
 });
 
 //region Login&Cookies
@@ -106,13 +106,9 @@ function checkLogin() {
     var paramItems = "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + user + "|" + _pw;
     $.ajax({
         type: "GET",
-        //url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + paramItems,        
-        url: paramItems,
-        //contentType: "application/json; charset=utf-8",
-        //cache: false,
-        //timeout: 5000,
-        //crossDomain: true,
-        dataType: "jsonp",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        url: paramItems,                
         success: function (results) {
             if (results.authenticateYouSirResult) {
                 $("#loginError").text("");
@@ -130,12 +126,14 @@ function checkLogin() {
                 $("#loginError").text("Login Unsuccessful");
             }
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {          
             var e = errorThrown;
-
-            var errorTxt2 = 'Error Log: ' + xhrObj.status + "|" + xhrObj.status + "|" + xhrObj.statusText + "|" + text + "|" + errorObj.message;
-            $("#loginError").text("Login Unsuccessful - : " + errorTxt2);
-
+            if (!(navigator.onLine)) {
+                $("#loginError").text("No network connection - cannot login!");
+            }
+            else {
+                $("#loginError").text("Login Unsuccessful: " + jqXHR.readyState + "\n" + jqXHR.responseText + "\n" + jqXHR.status + "\n" + jqXHR.statusText + "\n" + jqXHR.getAllResponseHeaders());
+            }
         }
     });
 }
@@ -295,7 +293,7 @@ function getOutageCodes() {
 function getOutages() {
     $.ajax({
         type: "GET",
-        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",
+        url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/GETACTIVEOUTAGES",        
         //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
@@ -406,7 +404,7 @@ function listSCADAOutages(data) {
         $('#scadaoutage [data-role=collapsible-set]').collapsibleset();
 
 
-        if (navigator.notification != undefined) {
+        if (navigator.notification != undefined) {                 
             //if (device.platform == 'android' || device.platform == 'Android' || device.platform == 'amazon-fireos') {
             //    var my_media = new Media("/android_asset/www/fcemcsound.wav");
             //    my_media.play();
@@ -464,9 +462,9 @@ function preConfirmOutage(oD) {
         cache: false,
         success: function (results) {
             var res = results.getOutageEventInfoResult;
-
+            
             setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
-
+                        
             var upstreamIDs = res.upstreamIDs;
             $("#select-upstream option").remove();
             for (i = 1; i < upstreamIDs.length; i++) {
@@ -485,7 +483,7 @@ function preConfirmOutage(oD) {
             $.mobile.pageContainer.pagecontainer("change", "#page2");
             $("#tabs").tabs("option", "active", 0);
             $('#tab-one').addClass("ui-btn-active");
-
+            
         },
         complete: function (jqXHR, textStatus) {
             $("#spinCont").hide();
@@ -520,10 +518,10 @@ function sendConfim(button) {
             url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/confirmOutage/" + dataString,
             //contentType: "application/json; charset=utf-8",
             cache: false,
-            success: function (results) {
+            success: function (results) {            
                 clearOutageRecords();
                 if (navigator.notification != undefined) {
-                    navigator.notification.alert("Outage has been confirmed!", fakeCallback, "Success!", "Ok");
+                    navigator.notification.alert("Outage has been confirmed!", fakeCallback, "Success!", "Ok");    
                 }
                 else {
                     alert("Outage has been confirmed!");
@@ -532,7 +530,7 @@ function sendConfim(button) {
             },
             complete: function (jqXHR, textStatus) {
                 $("#spinCont").hide();
-                $.mobile.pageContainer.pagecontainer("change", "#page1");
+                $.mobile.pageContainer.pagecontainer("change", "#page1");                
                 getOutages();
 
             },
@@ -566,7 +564,7 @@ function preRestoreOutage(oD) {
         cache: false,
         success: function (results) {
             var res = results.getOutageEventInfoResult;
-
+            
             setOUtageRecords(res.outageEventID, res.outageEventPhase, oD);
 
             $("#restoreLbl").text(oD);
@@ -592,11 +590,11 @@ function restoreOutage() {
     }
     else {
         sendRestore(2);
-    }
+    }    
 }
 
 function sendRestore(button) {
-    if (button == 2) {
+    if (button == 2) {        
         var cause = $("#select-cause option:selected").val();
         var equip = $("#select-equipment option:selected").val();
         var weather = $("#select-weather option:selected").val();
@@ -612,7 +610,7 @@ function sendRestore(button) {
                 url: "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/restoreOutage/" + dataString,
                 //contentType: "application/json; charset=utf-8",
                 cache: false,
-                success: function (results) {
+                success: function (results) {                    
                     clearOutageRecords();
 
                     if (navigator.notification != undefined) {
@@ -621,9 +619,9 @@ function sendRestore(button) {
                     else {
                         alert("Outage has been restored!");
                     }
-
+                    
                 },
-                complete: function (jqXHR, textStatus) {
+                complete: function ( jqXHR, textStatus) {                    
                     $("#spinCont").hide();
                     $.mobile.pageContainer.pagecontainer("change", "#page1");
                     outageBeingRestored = false;
@@ -643,7 +641,7 @@ function sendRestore(button) {
             }
             else {
                 alert("All selections must be made in order to restore outage!");
-            }
+            }            
         }
     }
     else if (button == 1) {
@@ -670,14 +668,14 @@ function prepNote(notedevice) {
         //contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (results) {
-            var res = results.getOutageEventInfoResult;
+            var res = results.getOutageEventInfoResult;           
             setOUtageRecords(res.outageEventID, res.outageEventPhase, notedevice);
-
+                        
             $("#noteNotes").val("");
             $("#spinCont").hide();
             $("#popup").popup("open");
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {         
             $("#spinCont").hide();
             clearOutageRecords();
             navigator.notification.alert("Error opening form.", fakeCallback, "Error!", "Ok");
@@ -721,7 +719,7 @@ function addNote() {
                 }
 
 
-
+                
             }
         });
     }
