@@ -100,6 +100,8 @@ $(document).ready(function () {
 
 //region Login&Cookies
 function checkLogin() {
+    $.support.cors = true;
+
     user = $("#un").val().trim();
     var _pw = $("#pw").val().trim();
     var paramItems = "https://gis.fourcty.org/FCEMCrest/FCEMCDataService.svc/authenticateYouSir/" + user + "|" + _pw;
