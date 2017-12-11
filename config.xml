@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     xmlns:android   = "http://schemas.android.com/apk/res/android"
     id          = "com.fcemc.FCEMComs"    
-    version     = "1.0.7" >
+    version     = "1.0.8" >
   
   <name>FCEMC-OMS</name>
 
@@ -88,14 +88,16 @@
   </plugin>
 
 
-
-
-  <platform name="android">
-    <icon src="res/icon/android/icon.png" />
-    <icon src="res/icon/android/icon-36-ldpi.png" qualifier="ldpi" />
-    <icon src="res/icon/android/icon-48-mdpi.png" qualifier="mdpi" />
-    <icon src="res/icon/android/icon-72-hdpi.png" qualifier="hdpi" />
-    <icon src="res/icon/android/icon-96-xhdpi.png" qualifier="xhdpi" />
+  <platform name="android">    
+    <icon src="res/mipmap/icon-36-ldpi.png" platform="android" qualifier="ldpi" />
+    <icon src="res/mipmap/icon-48-mdpi.png" platform="android" qualifier="mdpi" />
+    <icon src="res/mipmap/icon-72-hdpi.png" platform="android" qualifier="hdpi" />
+    <icon src="res/mipmap/icon-96-xhdpi.png" platform="android" qualifier="xhdpi" />
+    <icon src="res/mipmapd/icon-96-xhdpi.png" platform="android" qualifier="xxhdpi" />
+    <icon src="res/mipmap/icon-96-xhdpi.png" platform="android" qualifier="xxxhdpi" />
+    <icon src="res/mipmap/icon-96-xhdpi.png" platform="android" qualifier="fr-xxhdpi" />
+    <icon src="res/mipmap/icon.png" platform="android" />
+    
   </platform>
 
   <platform name="ios">
@@ -141,7 +143,7 @@
   <!--<preference name="SplashScreenDelay" value="10000" />-->
 
   <gap:config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>1.0.7</string>
+    <string>1.0.8</string>
   </gap:config-file>
 
   <gap:config-file platform="android" parent="/manifest">
