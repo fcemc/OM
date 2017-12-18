@@ -89,22 +89,23 @@
 
 
   <platform name="android">    
-     <icon src="res/icon/android/icon-36-ldpi.png" platform="android" qualifier="ldpi" />
+    <icon src="res/icon/android/icon.png" platform="android" qualifier="ldpi" />
+    <icon src="res/icon/android/icon.png" platform="android" qualifier="mdpi" />
+    <icon src="res/icon/android/icon.png" platform="android" qualifier="hdpi" />
+    <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xhdpi" />
+    <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xxhdpi" />
+    <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xxxhdpi" />
+    <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="fr-xxhdpi" />
+    <icon src="res/icon/android/icon.png" platform="android" />   
+     <!--<icon src="res/icon/android/icon-36-ldpi.png" platform="android" qualifier="ldpi" />
     <icon src="res/icon/android/icon-48-mdpi.png" platform="android" qualifier="mdpi" />
     <icon src="res/icon/android/icon-72-hdpi.png" platform="android" qualifier="hdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xhdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xxhdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="xxxhdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png" platform="android" qualifier="fr-xxhdpi" />
-    <icon src="res/icon/android/icon.png" platform="android" />    
-    <!--<icon src="res/mipmap/android/icon-36-ldpi.png" platform="android" qualifier="ldpi" />
-    <icon src="res/mipmap/android/icon-48-mdpi.png" platform="android" qualifier="mdpi" />
-    <icon src="res/mipmap/android/icon-72-hdpi.png" platform="android" qualifier="hdpi" />
-    <icon src="res/mipmap/android/icon-96-xhdpi.png" platform="android" qualifier="xhdpi" />
-    <icon src="res/mipmap/android/icon-96-xhdpi.png" platform="android" qualifier="xxhdpi" />
-    <icon src="res/mipmap/android/icon-96-xhdpi.png" platform="android" qualifier="xxxhdpi" />
-    <icon src="res/mipmap/android/icon-96-xhdpi.png" platform="android" qualifier="fr-xxhdpi" />
-    <icon src="res/mipmap/android/icon.png" platform="android" />-->    
+    <icon src="res/icon/android/icon.png" platform="android" />-->   
+  
   </platform>
 
   <platform name="ios">
